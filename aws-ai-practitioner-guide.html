@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS AI Practitioner (AIF-C01) Complete Guide</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#fff; --text:#1c2430; --muted:#5b6675; --line:#e2e6ec;
+  --accent:#e8710a; --accent2:#0b5fff; --good:#16a34a; --bad:#dc2626; --tip:#fff7e6; --tipline:#f5b041; --code:#eef1f6;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0f141b; --card:#171e28; --text:#e6ebf2; --muted:#9aa6b6; --line:#27313f; --accent:#ff9a3c; --accent2:#6ea0ff; --good:#34d399; --bad:#f87171; --tip:#2a2314; --tipline:#b7791f; --code:#1f2733;}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+header.top{background:linear-gradient(135deg,#232f3e,#37475a);color:#fff;padding:28px 20px}
+header.top h1{margin:0 0 6px;font-size:1.7rem}
+header.top p{margin:0;opacity:.85}
+.wrap{display:flex;max-width:1250px;margin:0 auto;gap:24px;padding:20px}
+nav.side{position:sticky;top:12px;align-self:flex-start;width:270px;flex-shrink:0;max-height:calc(100vh - 24px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:.9rem}
+nav.side h5{margin:12px 0 4px;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+nav.side a{display:block;color:var(--text);text-decoration:none;padding:3px 6px;border-radius:6px}
+nav.side a:hover{background:var(--code)}
+main{flex:1;min-width:0}
+section.topic,section.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:22px}
+h2{margin:0 0 4px;font-size:1.4rem}
+h3{margin:18px 0 6px;font-size:1.05rem;color:var(--accent2)}
+h4{margin:22px 0 8px}
+.dom{display:inline-block;font-size:.72rem;font-weight:600;background:var(--code);color:var(--muted);padding:2px 9px;border-radius:99px;margin-bottom:8px}
+.simple{border-left:4px solid var(--accent2);background:var(--code);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.tip{border-left:4px solid var(--tipline);background:var(--tip);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+ul{padding-left:22px;margin:6px 0}
+li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.92rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--code)}
+code{background:var(--code);padding:1px 6px;border-radius:5px;font-size:.9em}
+.q{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:12px 0}
+.qt{margin:0 0 8px}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:8px;cursor:pointer;border:1px solid transparent}
+.opt:hover{background:var(--code)}
+.opt input{margin-top:6px}
+.opt.right{background:color-mix(in srgb,var(--good) 18%,transparent);border-color:var(--good)}
+.opt.wrong{background:color-mix(in srgb,var(--bad) 18%,transparent);border-color:var(--bad)}
+.opt.missed{border:1px dashed var(--good)}
+button{font:inherit;background:var(--accent2);color:#fff;border:0;border-radius:8px;padding:6px 14px;cursor:pointer;margin-top:8px}
+button.ghost{background:var(--code);color:var(--text)}
+.exp{margin-top:8px;padding:8px 12px;background:var(--code);border-radius:8px;font-size:.93rem}
+.score{font-weight:600;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.box{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--bg)}
+.bar{height:10px;background:var(--code);border-radius:9px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--good);width:0}
+@media(max-width:860px){.wrap{flex-direction:column;padding:12px}nav.side{position:static;width:100%;max-height:260px}section.topic,section.panel{padding:16px}}
+
+.diagram{margin:16px 0;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:12px}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram figcaption{font-size:.9rem;color:var(--muted);margin-top:8px}
+.diagram .b{fill:var(--card);stroke:var(--muted);stroke-width:1.3}
+.diagram .ba{fill:color-mix(in srgb,var(--accent2) 16%,var(--card));stroke:var(--accent2);stroke-width:1.5}
+.diagram .bo{fill:color-mix(in srgb,var(--accent) 18%,var(--card));stroke:var(--accent);stroke-width:1.5}
+.diagram .bg{fill:color-mix(in srgb,var(--good) 18%,var(--card));stroke:var(--good);stroke-width:1.5}
+.diagram .br{fill:color-mix(in srgb,var(--bad) 16%,var(--card));stroke:var(--bad);stroke-width:1.5}
+.diagram polygon.b{stroke-width:1.5}
+.diagram text{fill:var(--text);font:600 13px -apple-system,"Segoe UI",Roboto,sans-serif}
+.diagram text.s{font-weight:400;font-size:11.5px;fill:var(--muted)}
+.diagram text.l{font-weight:500;font-size:12px}
+.diagram line,.diagram path.ar{stroke:var(--muted);stroke-width:1.8;fill:none}
+.diagram marker path{fill:var(--muted);stroke:none}
+details.qd{margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:4px 14px 12px}
+details.qd>summary{cursor:pointer;font-weight:700;padding:8px 0;color:var(--accent2)}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>AWS Certified AI Practitioner (AIF-C01) — Complete Guide</h1>
+  <p>Simple explanations · exam tips · 30+ five-option multiple-response questions per topic, diagrams · pattern guide · 15-day plan</p>
+</header>
+
+<div class="wrap">
+<nav class="side" id="nav">
+  <h5>Start here</h5>
+  <a href="#overview">Exam overview</a>
+  <a href="#plan">15-day study plan</a>
+  <a href="#patterns">Question patterns &amp; keyword map</a>
+  <h5>Domain 1 · AI/ML Fundamentals (20%)</h5>
+  <a href="#t1">1. AI vs ML vs DL vs GenAI</a>
+  <a href="#t2">2. Types of learning</a>
+  <a href="#t3">3. ML lifecycle &amp; data</a>
+  <a href="#t4">4. Evaluation metrics</a>
+  <a href="#t5">5. AWS AI services</a>
+  <a href="#t6">6. Amazon SageMaker</a>
+  <h5>Domain 2 · Generative AI (24%)</h5>
+  <a href="#t7">7. GenAI &amp; Foundation Models</a>
+  <a href="#t8">8. Amazon Bedrock</a>
+  <a href="#t9">9. Amazon Q, PartyRock &amp; use cases</a>
+  <h5>Domain 3 · Applications of FMs (28%)</h5>
+  <a href="#t10">10. Prompt engineering</a>
+  <a href="#t11">11. Inference parameters</a>
+  <a href="#t12">12. RAG, embeddings, vector DBs</a>
+  <a href="#t13">13. Customizing FMs</a>
+  <a href="#t14">14. Agents &amp; Guardrails</a>
+  <a href="#t15">15. Evaluating FMs</a>
+  <h5>Domain 4 · Responsible AI (14%)</h5>
+  <a href="#t16">16. Responsible AI &amp; bias</a>
+  <a href="#t17">17. Transparency &amp; explainability</a>
+  <h5>Domain 5 · Security &amp; Governance (14%)</h5>
+  <a href="#t18">18. Securing AI systems</a>
+  <a href="#t19">19. Governance &amp; compliance</a>
+  <a href="#t20">20. Cost &amp; deployment</a>
+  <h5>Finish</h5>
+  <a href="#cheat">Service cheat sheet</a>
+  <a href="#final">Last-day checklist</a>
+</nav>
+
+<main>
+
+<section class="panel" id="overview">
+  <h2>Exam overview</h2>
+  <div class="grid">
+    <div class="box"><b>Questions</b><br>65 (50 scored + 15 unscored, you can't tell which)</div>
+    <div class="box"><b>Time</b><br>90 minutes (~80 sec per question)</div>
+    <div class="box"><b>Pass mark</b><br>700 / 1000 (scaled)</div>
+    <div class="box"><b>Cost / level</b><br>USD 100 · Foundational, no coding needed</div>
+  </div>
+  <h3>Question formats</h3>
+  <ul>
+    <li><b>Multiple choice</b> – 1 correct of 4.</li>
+    <li><b>Multiple response</b> – choose 2 or 3 of 5+ options (this is the format practised in this guide). <b>No partial credit</b> – you must pick all correct ones.</li>
+    <li><b>Ordering</b> – put steps in sequence (e.g., ML lifecycle). <b>Matching</b> – match services to use cases. <b>Case study</b> – one scenario, several questions.</li>
+  </ul>
+  <h3>Domain weights</h3>
+  <table>
+    <tr><th>Domain</th><th>Weight</th><th>Topics in this guide</th></tr>
+    <tr><td>1. Fundamentals of AI and ML</td><td>20%</td><td>1–6</td></tr>
+    <tr><td>2. Fundamentals of Generative AI</td><td>24%</td><td>7–9</td></tr>
+    <tr><td>3. Applications of Foundation Models</td><td><b>28%</b> (biggest)</td><td>10–15</td></tr>
+    <tr><td>4. Guidelines for Responsible AI</td><td>14%</td><td>16–17</td></tr>
+    <tr><td>5. Security, Compliance, Governance</td><td>14%</td><td>18–20</td></tr>
+  </table>
+  <div class="tip"><b>Big idea:</b> This is a <i>"which AWS service / concept fits this scenario"</i> exam. You don't need maths or code. Know what each service <b>does in one line</b> and the <b>trigger words</b> in the question.</div>
+  <p class="score" id="overall">Practice progress: 0 / 0 answered correctly</p>
+  <div class="bar"><i id="overallbar"></i></div>
+  <button class="ghost" id="resetall">Reset all progress</button>
+</section>
+
+<section class="panel" id="plan">
+  <h2>15-day study plan</h2>
+  <p>About 2–3 hours per day. Read the topic, then do its questions, and re-read the explanation for every miss.</p>
+  <table>
+    <tr><th>Day</th><th>Topics</th><th>Goal</th></tr>
+    <tr><td>1</td><td>Overview + Topics 1, 2</td><td>AI/ML/DL/GenAI vocabulary; supervised vs unsupervised vs RL</td></tr>
+    <tr><td>2</td><td>Topics 3, 4</td><td>ML lifecycle, overfitting, metrics (precision/recall/RMSE)</td></tr>
+    <tr><td>3</td><td>Topic 5</td><td>Memorise the AWS AI services one-liners (Rekognition, Textract…)</td></tr>
+    <tr><td>4</td><td>Topic 6 + Domain 1 revision</td><td>SageMaker features; redo wrong Domain 1 questions</td></tr>
+    <tr><td>5</td><td>Topic 7</td><td>Foundation models, tokens, embeddings, transformers</td></tr>
+    <tr><td>6</td><td>Topic 8</td><td>Bedrock – models, features, privacy</td></tr>
+    <tr><td>7</td><td>Topic 9 + Domain 2 revision</td><td>Amazon Q, PartyRock, GenAI pros/cons</td></tr>
+    <tr><td>8</td><td>Topics 10, 11</td><td>Prompt techniques, temperature/top-p/top-k</td></tr>
+    <tr><td>9</td><td>Topic 12</td><td>RAG, embeddings, vector stores, Knowledge Bases</td></tr>
+    <tr><td>10</td><td>Topics 13, 14</td><td>Fine-tune vs continued pre-train vs RAG; Agents; Guardrails</td></tr>
+    <tr><td>11</td><td>Topic 15 + Domain 3 revision</td><td>ROUGE/BLEU/BERTScore, Bedrock evaluation</td></tr>
+    <tr><td>12</td><td>Topics 16, 17</td><td>Responsible AI, bias, Clarify, A2I, Model Cards</td></tr>
+    <tr><td>13</td><td>Topics 18, 19</td><td>IAM, KMS, PrivateLink, Macie, CloudTrail, Artifact, Audit Manager</td></tr>
+    <tr><td>14</td><td>Topic 20 + cheat sheet</td><td>Pricing, chips; redo ALL wrong questions (use Reset per topic)</td></tr>
+    <tr><td>15</td><td>Light revision only</td><td>Read pattern map + cheat sheet twice. Sleep well. Don't learn new things.</td></tr>
+  </table>
+  <div class="tip"><b>Extra practice:</b> AWS Skill Builder has a free official practice question set for AIF-C01 and the "Exam Prep Standard Course". Do the official set around Day 13–14.</div>
+</section>
+
+<section class="panel" id="patterns">
+  <h2>Pattern-wise guide: how the exam asks questions</h2>
+
+  <h3>Pattern 1 — Keyword → Answer (the most scoring pattern)</h3>
+  <table>
+    <tr><th>If the question says…</th><th>Think…</th></tr>
+    <tr><td>no ML expertise / no code / business analyst</td><td>SageMaker Canvas, PartyRock, prebuilt AI services, Amazon Q</td></tr>
+    <tr><td>fully managed / least operational overhead / serverless FMs</td><td>Amazon Bedrock (or prebuilt AI service)</td></tr>
+    <tr><td>use latest company data / reduce hallucination / no retraining</td><td><b>RAG</b> (Bedrock Knowledge Bases)</td></tr>
+    <tr><td>labeled data, specific task or style</td><td><b>Fine-tuning</b></td></tr>
+    <tr><td>large unlabeled domain data (legal, medical text)</td><td><b>Continued pre-training</b></td></tr>
+    <tr><td>multi-step task, call APIs, take actions</td><td><b>Agents for Bedrock</b></td></tr>
+    <tr><td>block toxic content / PII / off-topic</td><td><b>Bedrock Guardrails</b></td></tr>
+    <tr><td>detect bias / explain model prediction</td><td><b>SageMaker Clarify</b></td></tr>
+    <tr><td>human review of low-confidence predictions</td><td><b>Amazon A2I</b></td></tr>
+    <tr><td>label training data</td><td><b>SageMaker Ground Truth</b></td></tr>
+    <tr><td>model quality drifts in production</td><td><b>SageMaker Model Monitor</b></td></tr>
+    <tr><td>document a model for governance</td><td><b>SageMaker Model Cards</b> (AWS AI Service Cards for AWS services)</td></tr>
+    <tr><td>find sensitive data (PII) in S3</td><td><b>Amazon Macie</b></td></tr>
+    <tr><td>who called which API / audit trail</td><td><b>AWS CloudTrail</b></td></tr>
+    <tr><td>resource configuration compliance</td><td><b>AWS Config</b></td></tr>
+    <tr><td>download compliance reports (SOC, ISO)</td><td><b>AWS Artifact</b></td></tr>
+    <tr><td>automate audit evidence collection</td><td><b>AWS Audit Manager</b></td></tr>
+    <tr><td>private traffic, not over internet</td><td><b>AWS PrivateLink / VPC endpoints</b></td></tr>
+    <tr><td>encrypt data at rest</td><td><b>AWS KMS</b></td></tr>
+    <tr><td>more creative output</td><td>Higher <b>temperature</b></td></tr>
+    <tr><td>summarization quality metric / translation metric / semantic similarity</td><td><b>ROUGE</b> / <b>BLEU</b> / <b>BERTScore</b></td></tr>
+    <tr><td>predictable performance with custom model</td><td><b>Provisioned Throughput</b></td></tr>
+    <tr><td>cheaper, not real-time, large volumes</td><td><b>Batch inference</b></td></tr>
+  </table>
+
+  <h3>Pattern 2 — "Pick the least effort / cost" ladder (Domain 3)</h3>
+  <div class="simple">Cheapest → most expensive way to adapt a model:<br><b>Prompt engineering → RAG → Fine-tuning → Continued pre-training → Train from scratch.</b><br>If the question says "quickest / lowest cost / no training", answer from the left of this ladder.</div>
+
+  <h3>Pattern 3 — Pick the right AWS AI service (Domain 1)</h3>
+  <ul>
+    <li>Image/video → Rekognition · Document text → Textract · Text meaning → Comprehend</li>
+    <li>Speech→text Transcribe · Text→speech Polly · Translate → Translate</li>
+    <li>Chatbot → Lex · Search → Kendra · Recommendations → Personalize · Fraud → Fraud Detector</li>
+    <li>Rule: if a <i>pre-built</i> service solves it, that beats building a custom model in SageMaker.</li>
+  </ul>
+
+  <h3>Pattern 4 — Concept definitions</h3>
+  <p>"Which describes overfitting / hallucination / token / embedding / bias?" Learn the one-line definitions in each topic's “In simple words” box.</p>
+
+  <h3>Pattern 5 — Responsible AI &amp; Security scenarios</h3>
+  <p>Answers almost always follow: <b>diverse data, human oversight, transparency, least privilege, encryption, monitoring/audit</b>. Options that say "ignore", "disable logging", "make public", "share keys" are always wrong.</p>
+
+  <h3>Pattern 6 — Multiple response (choose 2/3)</h3>
+  <ul>
+    <li>No partial credit. Read how many to choose. Eliminate clearly wrong options first (usually 2 are absurd).</li>
+    <li>The right options tend to be from the <b>same theme</b> (e.g., two security controls). Wrong ones often mix unrelated services.</li>
+  </ul>
+
+  <h3>Pattern 7 — Ordering / matching</h3>
+  <p>Lifecycle order: <i>Data collection → Data prep / feature engineering → Train → Evaluate / tune → Deploy → Monitor</i>. RAG order: <i>Chunk &amp; embed documents → store in vector DB → embed query → similarity search → add to prompt → FM answers</i>.</p>
+
+  <h3>Test-day tactics</h3>
+  <ul>
+    <li>Words like <b>MOST cost-effective, LEAST operational overhead, FASTEST, BEST</b> decide between two valid answers.</li>
+    <li>Flag any question over ~90 sec, move on, return at the end. No negative marking – never leave blanks.</li>
+    <li>Look for absolutes ("always", "never", "guarantees") in options – usually wrong, e.g. "GenAI guarantees accuracy".</li>
+    <li>AWS-themed answer wins over generic: "use Bedrock Guardrails" beats "write your own filter".</li>
+  </ul>
+</section>
+
+<!-- ============ DOMAIN 1 ============ -->
+<section class="topic" id="t1">
+  <span class="dom">Domain 1 · Fundamentals of AI &amp; ML</span>
+  <h2>1. AI vs ML vs Deep Learning vs Generative AI</h2>
+  <div class="simple"><b>In simple words:</b> AI is the big umbrella (machines acting smart). ML is AI that <i>learns from data</i> instead of hand-written rules. Deep Learning is ML using many-layered neural networks. Generative AI is deep learning that <i>creates new content</i> (text, images, code).</div>
+  <pre style="margin:6px 0">AI  ⊃  Machine Learning  ⊃  Deep Learning  ⊃  Generative AI (Foundation Models / LLMs)</pre>
+  <h3>Key points</h3>
+  <ul>
+    <li><b>Traditional programming:</b> rules + data → answers. <b>ML:</b> data + answers → rules (a model).</li>
+    <li><b>Neural network:</b> layers of connected "neurons" (input, hidden, output layers). “Deep” = many hidden layers.</li>
+    <li><b>Model</b> = the trained artefact. <b>Training</b> = learning. <b>Inference</b> = using the model to predict.</li>
+    <li><b>Algorithm</b> = the method; <b>model</b> = the result after training on data.</li>
+    <li>Discriminative AI predicts/classifies; <b>Generative</b> AI creates.</li>
+    <li>Common AI tasks: computer vision, NLP, speech, recommendation, forecasting, anomaly detection.</li>
+    <li>When <b>not</b> to use ML: simple deterministic rules suffice, or there is no data / no clear pattern.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> “ML is a subset of AI; DL is a subset of ML” appears often. Inference = prediction on new data.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 320" role="img" aria-label="Nested circles: AI contains ML contains deep learning contains generative AI"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><circle class="b" cx="190" cy="160" r="150"/><circle class="ba" cx="190" cy="160" r="112"/><circle class="bo" cx="190" cy="160" r="74"/><circle class="bg" cx="190" cy="160" r="38"/><text class="" x="190" y="32" text-anchor="middle">AI</text><text class="" x="190" y="70" text-anchor="middle">Machine Learning</text><text class="" x="190" y="108" text-anchor="middle">Deep Learning</text><text class="" x="190" y="165" text-anchor="middle">GenAI</text><rect class="b" x="400" y="18" width="350" height="62" rx="9"/><text x="575.0" y="45.5" text-anchor="middle">Artificial Intelligence</text><text class="s" x="575.0" y="61.5" text-anchor="middle">Any technique that makes machines act smart</text><rect class="ba" x="400" y="92" width="350" height="62" rx="9"/><text x="575.0" y="119.5" text-anchor="middle">Machine Learning (ML)</text><text class="s" x="575.0" y="135.5" text-anchor="middle">Learns patterns from data, no hand-written rules</text><rect class="bo" x="400" y="166" width="350" height="62" rx="9"/><text x="575.0" y="193.5" text-anchor="middle">Deep Learning (DL)</text><text class="s" x="575.0" y="209.5" text-anchor="middle">ML with many-layer neural networks</text><rect class="bg" x="400" y="240" width="350" height="62" rx="9"/><text x="575.0" y="267.5" text-anchor="middle">Generative AI</text><text class="s" x="575.0" y="283.5" text-anchor="middle">Creates new text, images, code (LLMs / foundation models)</text></svg><figcaption><b>In simple words:</b> Each ring sits inside the bigger one. GenAI is a kind of deep learning, deep learning is a kind of ML, and ML is a kind of AI.</figcaption></figure>
+<div class="quiz" data-q="t1"></div>
+</section>
+
+<section class="topic" id="t2">
+  <span class="dom">Domain 1 · Fundamentals of AI &amp; ML</span>
+  <h2>2. Types of Learning &amp; Common Tasks</h2>
+  <div class="simple"><b>In simple words:</b> Supervised = learn from examples that already have the right answer (labels). Unsupervised = find hidden patterns without answers. Reinforcement = learn by trial and error with rewards.</div>
+  <table>
+    <tr><th>Type</th><th>Data</th><th>Tasks / examples</th></tr>
+    <tr><td><b>Supervised</b></td><td>Labeled</td><td><b>Classification</b> (spam/not spam, tumor type) · <b>Regression</b> (house price, temperature – a number)</td></tr>
+    <tr><td><b>Unsupervised</b></td><td>Unlabeled</td><td><b>Clustering</b> (customer segments, K-means) · dimensionality reduction (PCA) · anomaly detection · association</td></tr>
+    <tr><td><b>Reinforcement</b></td><td>Environment + rewards</td><td>Robotics, game AI, self-driving, dynamic pricing (agent, action, reward, policy)</td></tr>
+    <tr><td><b>Semi-supervised</b></td><td>Few labels + many unlabeled</td><td>Cheaper when labelling is costly</td></tr>
+    <tr><td><b>Self-supervised</b></td><td>Labels created from data itself</td><td>How LLMs are pre-trained (predict next word)</td></tr>
+  </table>
+  <h3>Data vocabulary</h3>
+  <ul>
+    <li><b>Structured</b> (tables), <b>semi-structured</b> (JSON), <b>unstructured</b> (text, images, audio).</li>
+    <li><b>Features</b> = input columns. <b>Label/target</b> = what you want to predict.</li>
+    <li>Batch inference (many at once, offline) vs real-time inference (instant, one request).</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> Number as output → regression. Category as output → classification. No labels, “group” → clustering. “Rewards/penalties” → reinforcement learning.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 285" role="img" aria-label="Three learning types side by side"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="10" y="8" width="230" height="34" rx="9"/><text x="125.0" y="29.5" text-anchor="middle">Supervised learning</text><rect class="bo" x="265" y="8" width="230" height="34" rx="9"/><text x="380.0" y="29.5" text-anchor="middle">Unsupervised learning</text><rect class="bg" x="520" y="8" width="230" height="34" rx="9"/><text x="635.0" y="29.5" text-anchor="middle">Reinforcement learning</text><rect class="b" x="25" y="62" width="200" height="48" rx="9"/><text x="125.0" y="82.5" text-anchor="middle">Data + correct labels</text><text class="s" x="125.0" y="98.5" text-anchor="middle">emails marked spam / not spam</text><line x1="125" y1="110" x2="125" y2="140" marker-end="url(#ah)"/><rect class="b" x="25" y="140" width="200" height="40" rx="9"/><text x="125.0" y="164.5" text-anchor="middle">Model learns the mapping</text><line x1="125" y1="180" x2="125" y2="210" marker-end="url(#ah)"/><rect class="b" x="25" y="210" width="200" height="48" rx="9"/><text x="125.0" y="230.5" text-anchor="middle">Predicts label for new data</text><text class="s" x="125.0" y="246.5" text-anchor="middle">classification, regression</text><rect class="b" x="280" y="62" width="200" height="48" rx="9"/><text x="380.0" y="82.5" text-anchor="middle">Data with NO labels</text><text class="s" x="380.0" y="98.5" text-anchor="middle">customer purchase history</text><line x1="380" y1="110" x2="380" y2="140" marker-end="url(#ah)"/><rect class="b" x="280" y="140" width="200" height="40" rx="9"/><text x="380.0" y="164.5" text-anchor="middle">Model finds structure</text><line x1="380" y1="180" x2="380" y2="210" marker-end="url(#ah)"/><rect class="b" x="280" y="210" width="200" height="48" rx="9"/><text x="380.0" y="230.5" text-anchor="middle">Groups / anomalies</text><text class="s" x="380.0" y="246.5" text-anchor="middle">clustering, PCA</text><rect class="b" x="560" y="62" width="150" height="46" rx="9"/><text x="635.0" y="81.5" text-anchor="middle">Agent</text><text class="s" x="635.0" y="97.5" text-anchor="middle">makes decisions</text><rect class="b" x="560" y="190" width="150" height="46" rx="9"/><text x="635.0" y="209.5" text-anchor="middle">Environment</text><text class="s" x="635.0" y="225.5" text-anchor="middle">game, robot, market</text><line x1="615" y1="108" x2="615" y2="190" marker-end="url(#ah)"/><text class="s" x="622" y="155" text-anchor="start">action</text><line x1="660" y1="190" x2="660" y2="108" marker-end="url(#ah)"/><text class="s" x="668" y="130" text-anchor="start">reward</text><text class="s" x="635" y="262" text-anchor="middle">Learns by trial and error</text></svg><figcaption><b>In simple words:</b> Supervised = learn from answered examples. Unsupervised = find hidden groups with no answers. Reinforcement = try things, get rewards or penalties, improve.</figcaption></figure>
+<div class="quiz" data-q="t2"></div>
+</section>
+
+<section class="topic" id="t3">
+  <span class="dom">Domain 1 · Fundamentals of AI &amp; ML</span>
+  <h2>3. ML Lifecycle, Data Quality &amp; Overfitting</h2>
+  <div class="simple"><b>In simple words:</b> ML is a loop: get data, clean it, train, test, deploy, watch it, and retrain when it gets stale.</div>
+  <h3>Lifecycle (know the order!)</h3>
+  <ol>
+    <li>Business goal / problem framing</li>
+    <li>Data collection &amp; labeling</li>
+    <li>Data preparation, EDA, <b>feature engineering</b></li>
+    <li>Model training &amp; <b>hyperparameter tuning</b></li>
+    <li>Evaluation (on a test set)</li>
+    <li>Deployment (real-time endpoint, batch, serverless)</li>
+    <li>Monitoring (drift) → retrain  ← this is <b>MLOps</b> (CI/CD for ML)</li>
+  </ol>
+  <h3>Key ideas</h3>
+  <ul>
+    <li><b>Data split:</b> train / validation / test. Never evaluate on training data.</li>
+    <li><b>Overfitting:</b> great on training data, bad on new data (memorised noise). Fix: more data, simpler model, regularization, early stopping.</li>
+    <li><b>Underfitting:</b> bad on both (model too simple). Fix: more features, more complex model, train longer.</li>
+    <li><b>Bias–variance:</b> high bias → underfit; high variance → overfit.</li>
+    <li><b>Hyperparameters</b> are set before training (learning rate, epochs); <b>parameters</b> are learned (weights).</li>
+    <li><b>Data drift / model drift:</b> real-world data changes and accuracy drops → monitor and retrain.</li>
+    <li>Garbage in, garbage out: data quality, representativeness and labelling matter most.</li>
+    <li><b>Feature engineering</b> = creating/transforming inputs so the model learns better.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> “High training accuracy, low test accuracy” = overfitting. Services: Data Wrangler (prep), Feature Store (store features), Ground Truth (labels), Model Monitor (drift).</div>
+  <figure class="diagram"><svg viewBox="0 0 760 235" role="img" aria-label="ML lifecycle loop from business goal to monitoring and retraining"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="10" y="20" width="170" height="60" rx="9"/><text x="95.0" y="46.5" text-anchor="middle">1 Business goal</text><text class="s" x="95.0" y="62.5" text-anchor="middle">what to predict?</text><rect class="ba" x="200" y="20" width="170" height="60" rx="9"/><text x="285.0" y="46.5" text-anchor="middle">2 Collect + label data</text><text class="s" x="285.0" y="62.5" text-anchor="middle">Ground Truth</text><rect class="ba" x="390" y="20" width="170" height="60" rx="9"/><text x="475.0" y="46.5" text-anchor="middle">3 Prepare + features</text><text class="s" x="475.0" y="62.5" text-anchor="middle">Data Wrangler / Feature Store</text><rect class="ba" x="580" y="20" width="170" height="60" rx="9"/><text x="665.0" y="46.5" text-anchor="middle">4 Train + tune</text><text class="s" x="665.0" y="62.5" text-anchor="middle">SageMaker training</text><line x1="180" y1="50" x2="200" y2="50" marker-end="url(#ah)"/><line x1="370" y1="50" x2="390" y2="50" marker-end="url(#ah)"/><line x1="560" y1="50" x2="580" y2="50" marker-end="url(#ah)"/><line x1="665" y1="80" x2="665" y2="150" marker-end="url(#ah)"/><rect class="bo" x="580" y="150" width="170" height="60" rx="9"/><text x="665.0" y="176.5" text-anchor="middle">5 Evaluate</text><text class="s" x="665.0" y="192.5" text-anchor="middle">test set: F1, RMSE</text><rect class="bo" x="390" y="150" width="170" height="60" rx="9"/><text x="475.0" y="176.5" text-anchor="middle">6 Deploy</text><text class="s" x="475.0" y="192.5" text-anchor="middle">real-time / batch</text><rect class="bg" x="200" y="150" width="170" height="60" rx="9"/><text x="285.0" y="176.5" text-anchor="middle">7 Monitor</text><text class="s" x="285.0" y="192.5" text-anchor="middle">Model Monitor</text><line x1="580" y1="180" x2="560" y2="180" marker-end="url(#ah)"/><line x1="390" y1="180" x2="370" y2="180" marker-end="url(#ah)"/><line x1="285" y1="150" x2="285" y2="80" marker-end="url(#ah)"/><text class="s" x="295" y="120" text-anchor="start">data drifts, accuracy drops: retrain</text></svg><figcaption><b>In simple words:</b> ML is a loop, not a straight line. After deployment you keep watching the model and retrain when the real world changes.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 760 195" role="img" aria-label="Three charts: underfitting, good fit, overfitting"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="10" width="230" height="130" rx="9"/><g transform="translate(15,10)"><circle cx="20" cy="95" r="4" fill="var(--accent2)"/><circle cx="45" cy="70" r="4" fill="var(--accent2)"/><circle cx="70" cy="80" r="4" fill="var(--accent2)"/><circle cx="95" cy="45" r="4" fill="var(--accent2)"/><circle cx="120" cy="55" r="4" fill="var(--accent2)"/><circle cx="145" cy="30" r="4" fill="var(--accent2)"/><circle cx="170" cy="40" r="4" fill="var(--accent2)"/><circle cx="195" cy="20" r="4" fill="var(--accent2)"/><path d="M10 62 L210 62" fill="none" stroke="var(--bad)" stroke-width="2.2"/></g><text class="" x="125" y="162" text-anchor="middle">Underfitting</text><text class="s" x="125" y="179" text-anchor="middle">too simple, misses the pattern</text><rect class="b" x="265" y="10" width="230" height="130" rx="9"/><g transform="translate(270,10)"><circle cx="20" cy="95" r="4" fill="var(--accent2)"/><circle cx="45" cy="70" r="4" fill="var(--accent2)"/><circle cx="70" cy="80" r="4" fill="var(--accent2)"/><circle cx="95" cy="45" r="4" fill="var(--accent2)"/><circle cx="120" cy="55" r="4" fill="var(--accent2)"/><circle cx="145" cy="30" r="4" fill="var(--accent2)"/><circle cx="170" cy="40" r="4" fill="var(--accent2)"/><circle cx="195" cy="20" r="4" fill="var(--accent2)"/><path d="M10 105 C 80 85, 140 45, 210 18" fill="none" stroke="var(--good)" stroke-width="2.2"/></g><text class="" x="380" y="162" text-anchor="middle">Good fit</text><text class="s" x="380" y="179" text-anchor="middle">captures the trend</text><rect class="b" x="520" y="10" width="230" height="130" rx="9"/><g transform="translate(525,10)"><circle cx="20" cy="95" r="4" fill="var(--accent2)"/><circle cx="45" cy="70" r="4" fill="var(--accent2)"/><circle cx="70" cy="80" r="4" fill="var(--accent2)"/><circle cx="95" cy="45" r="4" fill="var(--accent2)"/><circle cx="120" cy="55" r="4" fill="var(--accent2)"/><circle cx="145" cy="30" r="4" fill="var(--accent2)"/><circle cx="170" cy="40" r="4" fill="var(--accent2)"/><circle cx="195" cy="20" r="4" fill="var(--accent2)"/><path d="M10 98 L20 95 L45 70 L70 80 L95 45 L120 55 L145 30 L170 40 L195 20 L210 8" fill="none" stroke="var(--bad)" stroke-width="2.2"/></g><text class="" x="635" y="162" text-anchor="middle">Overfitting</text><text class="s" x="635" y="179" text-anchor="middle">memorizes noise, fails on new data</text></svg><figcaption><b>In simple words:</b> Blue dots are your training data. Underfit: the line is too simple. Overfit: the line chases every dot, so new data breaks it. Aim for the middle.</figcaption></figure>
+<div class="quiz" data-q="t3"></div>
+</section>
+
+<section class="topic" id="t4">
+  <span class="dom">Domain 1 · Fundamentals of AI &amp; ML</span>
+  <h2>4. Model Evaluation Metrics (classic ML)</h2>
+  <div class="simple"><b>In simple words:</b> Metrics are scorecards. Pick the scorecard that matches the cost of mistakes.</div>
+  <h3>Classification (confusion matrix: TP, FP, TN, FN)</h3>
+  <ul>
+    <li><b>Accuracy</b> = correct / total (misleading when classes are imbalanced).</li>
+    <li><b>Precision</b> = TP / (TP+FP) — “of those I flagged, how many were truly positive?” Important when false alarms are costly (spam filter).</li>
+    <li><b>Recall</b> (sensitivity) = TP / (TP+FN) — “of all true positives, how many did I catch?” Important when misses are costly (cancer, fraud).</li>
+    <li><b>F1</b> = balance of precision and recall.</li>
+    <li><b>AUC-ROC</b> = how well the model separates classes (1.0 perfect, 0.5 random).</li>
+  </ul>
+  <h3>Regression</h3>
+  <ul><li><b>MAE</b>, <b>MSE</b>, <b>RMSE</b> (average error size; lower is better), <b>R²</b> (variance explained).</li></ul>
+  <h3>Business metrics</h3>
+  <ul><li>Model metrics must connect to business value: cost savings, conversion rate, customer satisfaction, ROI.</li></ul>
+  <div class="tip"><b>Exam tip:</b> Fraud / disease detection → <b>recall</b>. Fewer false alarms → <b>precision</b>. Predicting a number → <b>RMSE/MAE</b>. Text generation metrics (ROUGE, BLEU) come in Topic 15.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 260" role="img" aria-label="Confusion matrix with precision and recall formulas"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><text class="" x="215" y="38" text-anchor="middle">Predicted: Positive</text><text class="" x="345" y="38" text-anchor="middle">Predicted: Negative</text><text class="" x="145" y="98" text-anchor="end">Actual: Positive</text><text class="" x="145" y="178" text-anchor="end">Actual: Negative</text><rect class="bg" x="150" y="50" width="130" height="80" rx="9"/><text x="215.0" y="86.5" text-anchor="middle">TP</text><text class="s" x="215.0" y="102.5" text-anchor="middle">caught it</text><rect class="br" x="280" y="50" width="130" height="80" rx="9"/><text x="345.0" y="86.5" text-anchor="middle">FN</text><text class="s" x="345.0" y="102.5" text-anchor="middle">missed it</text><rect class="bo" x="150" y="130" width="130" height="80" rx="9"/><text x="215.0" y="166.5" text-anchor="middle">FP</text><text class="s" x="215.0" y="182.5" text-anchor="middle">false alarm</text><rect class="bg" x="280" y="130" width="130" height="80" rx="9"/><text x="345.0" y="166.5" text-anchor="middle">TN</text><text class="s" x="345.0" y="182.5" text-anchor="middle">correctly ignored</text><rect class="ba" x="440" y="20" width="310" height="52" rx="9"/><text x="595.0" y="42.5" text-anchor="middle">Precision = TP / (TP + FP)</text><text class="s" x="595.0" y="58.5" text-anchor="middle">Of those I flagged, how many were right?</text><rect class="ba" x="440" y="82" width="310" height="52" rx="9"/><text x="595.0" y="104.5" text-anchor="middle">Recall = TP / (TP + FN)</text><text class="s" x="595.0" y="120.5" text-anchor="middle">Of all real positives, how many did I catch?</text><rect class="b" x="440" y="144" width="310" height="52" rx="9"/><text x="595.0" y="166.5" text-anchor="middle">Accuracy = (TP + TN) / all</text><text class="s" x="595.0" y="182.5" text-anchor="middle">Misleading when one class is rare</text><rect class="b" x="440" y="206" width="310" height="40" rx="9"/><text x="595.0" y="230.5" text-anchor="middle">F1 = balance of precision and recall</text></svg><figcaption><b>In simple words:</b> Missing a real case is costly (cancer, fraud)? Chase recall. Raising false alarms is costly (spam filter)? Chase precision.</figcaption></figure>
+<div class="quiz" data-q="t4"></div>
+</section>
+
+<section class="topic" id="t5">
+  <span class="dom">Domain 1 · Fundamentals of AI &amp; ML</span>
+  <h2>5. AWS Pre-built AI Services</h2>
+  <div class="simple"><b>In simple words:</b> AWS already trained models for common jobs. You call an API — no ML skills needed. Always prefer these if they fit.</div>
+  <table>
+    <tr><th>Service</th><th>One-liner</th></tr>
+    <tr><td><b>Rekognition</b></td><td>Image &amp; video analysis: objects, faces, moderation, celebrities, text in images</td></tr>
+    <tr><td><b>Textract</b></td><td>Extract text, tables, forms from scanned documents (OCR+)</td></tr>
+    <tr><td><b>Comprehend</b></td><td>NLP: sentiment, entities, key phrases, language, PII detection, topic modelling (Comprehend Medical for health text)</td></tr>
+    <tr><td><b>Translate</b></td><td>Language translation</td></tr>
+    <tr><td><b>Transcribe</b></td><td>Speech → text (call analytics, subtitles)</td></tr>
+    <tr><td><b>Polly</b></td><td>Text → lifelike speech</td></tr>
+    <tr><td><b>Lex</b></td><td>Build chatbots/voice bots (same tech as Alexa)</td></tr>
+    <tr><td><b>Kendra</b></td><td>Intelligent enterprise search (natural-language questions over documents)</td></tr>
+    <tr><td><b>Personalize</b></td><td>Real-time personalised recommendations</td></tr>
+    <tr><td><b>Forecast</b></td><td>Time-series forecasting (demand, inventory)</td></tr>
+    <tr><td><b>Fraud Detector</b></td><td>Detect online fraud</td></tr>
+    <tr><td><b>Amazon Connect</b></td><td>Cloud contact center (uses AI features)</td></tr>
+    <tr><td><b>Amazon Q</b></td><td>GenAI assistant (see Topic 9)</td></tr>
+  </table>
+  <div class="tip"><b>Exam tip:</b> Typical chain: Transcribe (audio→text) → Comprehend (sentiment) → Translate → Polly (text→audio). Questions give a scenario and ask “which service?”.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 386" role="img" aria-label="Mapping from input type to AWS AI service"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="8" width="330" height="34" rx="9"/><text x="175.0" y="29.5" text-anchor="middle">Images / video</text><line x1="340" y1="25" x2="430" y2="25" marker-end="url(#ah)"/><rect class="ba" x="430" y="8" width="320" height="34" rx="9"/><text x="590.0" y="29.5" text-anchor="middle">Amazon Rekognition</text><rect class="b" x="10" y="50" width="330" height="34" rx="9"/><text x="175.0" y="71.5" text-anchor="middle">Scanned documents, forms</text><line x1="340" y1="67" x2="430" y2="67" marker-end="url(#ah)"/><rect class="ba" x="430" y="50" width="320" height="34" rx="9"/><text x="590.0" y="71.5" text-anchor="middle">Amazon Textract</text><rect class="b" x="10" y="92" width="330" height="34" rx="9"/><text x="175.0" y="113.5" text-anchor="middle">Text meaning: sentiment, entities, PII</text><line x1="340" y1="109" x2="430" y2="109" marker-end="url(#ah)"/><rect class="ba" x="430" y="92" width="320" height="34" rx="9"/><text x="590.0" y="113.5" text-anchor="middle">Amazon Comprehend</text><rect class="b" x="10" y="134" width="330" height="34" rx="9"/><text x="175.0" y="155.5" text-anchor="middle">Text in another language</text><line x1="340" y1="151" x2="430" y2="151" marker-end="url(#ah)"/><rect class="ba" x="430" y="134" width="320" height="34" rx="9"/><text x="590.0" y="155.5" text-anchor="middle">Amazon Translate</text><rect class="b" x="10" y="176" width="330" height="34" rx="9"/><text x="175.0" y="197.5" text-anchor="middle">Speech audio to text</text><line x1="340" y1="193" x2="430" y2="193" marker-end="url(#ah)"/><rect class="ba" x="430" y="176" width="320" height="34" rx="9"/><text x="590.0" y="197.5" text-anchor="middle">Amazon Transcribe</text><rect class="b" x="10" y="218" width="330" height="34" rx="9"/><text x="175.0" y="239.5" text-anchor="middle">Text to spoken audio</text><line x1="340" y1="235" x2="430" y2="235" marker-end="url(#ah)"/><rect class="ba" x="430" y="218" width="320" height="34" rx="9"/><text x="590.0" y="239.5" text-anchor="middle">Amazon Polly</text><rect class="b" x="10" y="260" width="330" height="34" rx="9"/><text x="175.0" y="281.5" text-anchor="middle">Chatbot conversation</text><line x1="340" y1="277" x2="430" y2="277" marker-end="url(#ah)"/><rect class="ba" x="430" y="260" width="320" height="34" rx="9"/><text x="590.0" y="281.5" text-anchor="middle">Amazon Lex</text><rect class="b" x="10" y="302" width="330" height="34" rx="9"/><text x="175.0" y="323.5" text-anchor="middle">Search company documents</text><line x1="340" y1="319" x2="430" y2="319" marker-end="url(#ah)"/><rect class="ba" x="430" y="302" width="320" height="34" rx="9"/><text x="590.0" y="323.5" text-anchor="middle">Amazon Kendra</text><rect class="b" x="10" y="344" width="330" height="34" rx="9"/><text x="175.0" y="365.5" text-anchor="middle">Recommend items from user behavior</text><line x1="340" y1="361" x2="430" y2="361" marker-end="url(#ah)"/><rect class="ba" x="430" y="344" width="320" height="34" rx="9"/><text x="590.0" y="365.5" text-anchor="middle">Amazon Personalize</text></svg><figcaption><b>In simple words:</b> Read the input type in the question, then pick the matching service. Pre-built services beat custom models when they fit.</figcaption></figure>
+<div class="quiz" data-q="t5"></div>
+</section>
+
+<section class="topic" id="t6">
+  <span class="dom">Domain 1 · Fundamentals of AI &amp; ML</span>
+  <h2>6. Amazon SageMaker (build-your-own ML)</h2>
+  <div class="simple"><b>In simple words:</b> SageMaker is AWS's all-in-one workshop for building, training and deploying custom ML models.</div>
+  <table>
+    <tr><th>Feature</th><th>Use</th></tr>
+    <tr><td>SageMaker Studio</td><td>Web IDE for the entire ML workflow</td></tr>
+    <tr><td>Data Wrangler</td><td>Prepare/clean data with low code</td></tr>
+    <tr><td>Feature Store</td><td>Store &amp; reuse features</td></tr>
+    <tr><td>Ground Truth</td><td>Data labeling (humans + ML; Plus = managed workforce)</td></tr>
+    <tr><td>Autopilot / Canvas</td><td>AutoML. <b>Canvas</b> = no-code, point-and-click for analysts</td></tr>
+    <tr><td>JumpStart</td><td>Hub of pre-trained models &amp; foundation models, ready to deploy/fine-tune</td></tr>
+    <tr><td>Training jobs / Hyperparameter tuning</td><td>Managed training, automatic model tuning</td></tr>
+    <tr><td>Endpoints</td><td>Real-time, serverless, asynchronous, batch transform</td></tr>
+    <tr><td>Pipelines / Model Registry</td><td>MLOps: automate workflow, version &amp; approve models</td></tr>
+    <tr><td>Model Monitor</td><td>Detect data/model drift and quality issues in production</td></tr>
+    <tr><td>Clarify</td><td>Detect bias &amp; explain predictions</td></tr>
+    <tr><td>Model Cards</td><td>Document model purpose, risks, performance</td></tr>
+    <tr><td>Role Manager</td><td>Simplified IAM roles for ML personas</td></tr>
+  </table>
+  <h3>Choosing your path</h3>
+  <ul>
+    <li>Pre-built AI service (easiest) → Bedrock/GenAI → SageMaker JumpStart → SageMaker custom (most control, most work).</li>
+    <li>Open-source frameworks supported: TensorFlow, PyTorch, scikit-learn, XGBoost, Hugging Face.</li>
+  </ul>
+  <figure class="diagram"><svg viewBox="0 0 760 165" role="img" aria-label="SageMaker stages with tool names"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="5" y="20" width="138" height="100" rx="9"/><text x="74.0" y="58.5" text-anchor="middle">Label</text><text class="s" x="74.0" y="74.5" text-anchor="middle">Ground Truth</text><text class="s" x="74.0" y="90.5" text-anchor="middle">human labeling</text><line x1="143" y1="70" x2="157" y2="70" marker-end="url(#ah)"/><rect class="ba" x="157" y="20" width="138" height="100" rx="9"/><text x="226.0" y="58.5" text-anchor="middle">Prepare</text><text class="s" x="226.0" y="74.5" text-anchor="middle">Data Wrangler</text><text class="s" x="226.0" y="90.5" text-anchor="middle">Feature Store</text><line x1="295" y1="70" x2="309" y2="70" marker-end="url(#ah)"/><rect class="bo" x="309" y="20" width="138" height="100" rx="9"/><text x="378.0" y="58.5" text-anchor="middle">Build + Train</text><text class="s" x="378.0" y="74.5" text-anchor="middle">Studio, JumpStart</text><text class="s" x="378.0" y="90.5" text-anchor="middle">Autopilot, tuning</text><line x1="447" y1="70" x2="461" y2="70" marker-end="url(#ah)"/><rect class="bg" x="461" y="20" width="138" height="100" rx="9"/><text x="530.0" y="58.5" text-anchor="middle">Deploy</text><text class="s" x="530.0" y="74.5" text-anchor="middle">Endpoints, Pipelines</text><text class="s" x="530.0" y="90.5" text-anchor="middle">Model Registry</text><line x1="599" y1="70" x2="613" y2="70" marker-end="url(#ah)"/><rect class="bg" x="613" y="20" width="138" height="100" rx="9"/><text x="682.0" y="58.5" text-anchor="middle">Monitor</text><text class="s" x="682.0" y="74.5" text-anchor="middle">Model Monitor</text><text class="s" x="682.0" y="90.5" text-anchor="middle">Clarify, Model Cards</text><text class="s" x="380" y="150" text-anchor="middle">Prefer a pre-built AI service or Bedrock first. Use SageMaker when you need a custom model.</text></svg><figcaption><b>In simple words:</b> SageMaker is one workshop with a tool for every stage of building your own ML model.</figcaption></figure>
+<div class="quiz" data-q="t6"></div>
+</section>
+
+<!-- ============ DOMAIN 2 ============ -->
+<section class="topic" id="t7">
+  <span class="dom">Domain 2 · Fundamentals of Generative AI</span>
+  <h2>7. Generative AI &amp; Foundation Models</h2>
+  <div class="simple"><b>In simple words:</b> A foundation model (FM) is a huge model pre-trained on massive general data, which you can adapt to many tasks. An LLM is an FM focused on language. It works by predicting the next token.</div>
+  <h3>Core concepts</h3>
+  <ul>
+    <li><b>Transformer:</b> the architecture behind modern LLMs; uses <i>attention</i> to understand context of all words at once.</li>
+    <li><b>Token:</b> a chunk of text (word or part of a word). Pricing and limits are counted in tokens.</li>
+    <li><b>Context window:</b> max tokens the model can see (prompt + answer).</li>
+    <li><b>Embedding:</b> a list of numbers (vector) representing meaning; similar meanings are close together. Used for search, RAG, recommendations.</li>
+    <li><b>Multimodal:</b> handles several inputs/outputs (text + image + audio).</li>
+    <li><b>Diffusion models:</b> create images by removing noise step by step (Stable Diffusion, Titan Image Generator). <b>GANs / VAEs:</b> older generative approaches.</li>
+    <li><b>Model types:</b> text-to-text, text-to-image, image-to-text, embeddings models.</li>
+    <li><b>FM lifecycle:</b> data selection → pre-training → optimisation (fine-tune/prompt) → evaluation → deployment → feedback.</li>
+  </ul>
+  <h3>Pros and cons</h3>
+  <table>
+    <tr><th>Advantages</th><th>Limitations / risks</th></tr>
+    <tr><td>Adaptability, speed to build, creativity, personalisation, productivity, summarisation, many tasks with one model</td><td><b>Hallucination</b> (confident wrong answers), <b>nondeterminism</b> (varied outputs), bias, toxicity, privacy leaks, IP/copyright issues, limited interpretability, outdated knowledge, cost</td></tr>
+  </table>
+  <div class="tip"><b>Exam tip:</b> Hallucination fixes → RAG, better prompts, Guardrails (grounding check), human review. “Guarantees accuracy” is always a wrong option.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 160" role="img" aria-label="LLM pipeline from prompt to next-token prediction"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="5" y="20" width="138" height="70" rx="9"/><text x="74.0" y="59.5" text-anchor="middle">Prompt</text><text class="s" x="74" y="70" text-anchor="middle">"Cats love"</text><line x1="143" y1="55" x2="157" y2="55" marker-end="url(#ah)"/><rect class="ba" x="157" y="20" width="138" height="70" rx="9"/><text x="226.0" y="59.5" text-anchor="middle">Tokens</text><text class="s" x="226" y="70" text-anchor="middle">[Cats][ love]</text><line x1="295" y1="55" x2="309" y2="55" marker-end="url(#ah)"/><rect class="bo" x="309" y="20" width="138" height="70" rx="9"/><text x="378.0" y="59.5" text-anchor="middle">Embeddings</text><text class="s" x="378" y="70" text-anchor="middle">[0.2, -0.7, ...]</text><line x1="447" y1="55" x2="461" y2="55" marker-end="url(#ah)"/><rect class="bg" x="461" y="20" width="138" height="70" rx="9"/><text x="530.0" y="59.5" text-anchor="middle">Transformer</text><text class="s" x="530" y="70" text-anchor="middle">weighs the context</text><line x1="599" y1="55" x2="613" y2="55" marker-end="url(#ah)"/><rect class="ba" x="613" y="20" width="138" height="70" rx="9"/><text x="682.0" y="59.5" text-anchor="middle">Next token</text><text class="s" x="682" y="70" text-anchor="middle">milk 40%, fish 30%...</text><path class="ar" d="M650 94 C 650 128, 80 128, 80 94" marker-end="url(#ah)" stroke-dasharray="5 4"/><text class="s" x="365" y="148" text-anchor="middle">pick a token, add it to the text, repeat until done</text></svg><figcaption><b>In simple words:</b> An LLM turns text into numbers, uses attention to weigh the context, predicts the most likely next piece of text, and repeats.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 760 300" role="img" aria-label="Two-dimensional plot of embedding vectors with animal and vehicle clusters"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="8" width="420" height="285" rx="9"/><ellipse cx="130" cy="120" rx="105" ry="68" fill="var(--accent)" opacity=".16" stroke="var(--accent)"/><ellipse cx="320" cy="215" rx="100" ry="58" fill="var(--accent2)" opacity=".16" stroke="var(--accent2)"/><circle cx="105" cy="105" r="6" fill="var(--accent)"/><text class="l" x="115" y="109" text-anchor="start">dog</text><circle cx="150" cy="88" r="6" fill="var(--accent)"/><text class="l" x="160" y="92" text-anchor="start">cat</text><circle cx="95" cy="145" r="6" fill="var(--accent)"/><text class="l" x="105" y="149" text-anchor="start">puppy</text><circle cx="285" cy="200" r="6" fill="var(--accent2)"/><text class="l" x="295" y="204" text-anchor="start">car</text><circle cx="345" cy="190" r="6" fill="var(--accent2)"/><text class="l" x="355" y="194" text-anchor="start">truck</text><circle cx="315" cy="245" r="6" fill="var(--accent2)"/><text class="l" x="325" y="249" text-anchor="start">bus</text><circle cx="185" cy="135" r="7" fill="var(--good)"/><text class="l" x="196" y="152" text-anchor="start">kitten (query)</text><line x1="181" y1="130" x2="156" y2="94" marker-end="url(#ah)" stroke-dasharray="5 4"/><text class="s" x="200" y="285" text-anchor="middle">dimension 1  →</text><rect class="b" x="460" y="12" width="290" height="62" rx="9"/><text x="605.0" y="39.5" text-anchor="middle">Text becomes numbers</text><text class="s" x="605.0" y="55.5" text-anchor="middle">dog = [0.8, 0.3, -0.5, ...]</text><rect class="bo" x="460" y="84" width="290" height="62" rx="9"/><text x="605.0" y="111.5" text-anchor="middle">Close together = similar meaning</text><text class="s" x="605.0" y="127.5" text-anchor="middle">dog, cat, puppy cluster</text><rect class="bg" x="460" y="156" width="290" height="62" rx="9"/><text x="605.0" y="183.5" text-anchor="middle">Search = find nearest neighbors</text><text class="s" x="605.0" y="199.5" text-anchor="middle">cosine similarity / distance</text><rect class="ba" x="460" y="228" width="290" height="62" rx="9"/><text x="605.0" y="255.5" text-anchor="middle">Stored in a vector database</text><text class="s" x="605.0" y="271.5" text-anchor="middle">OpenSearch, Aurora pgvector</text></svg><figcaption><b>In simple words:</b> An embedding is an address in "meaning space". The query "kitten" lands next to "cat", far from "car". RAG and semantic search simply look for the nearest addresses.</figcaption></figure>
+<div class="quiz" data-q="t7"></div>
+</section>
+
+<section class="topic" id="t8">
+  <span class="dom">Domain 2 · Fundamentals of Generative AI</span>
+  <h2>8. Amazon Bedrock</h2>
+  <div class="simple"><b>In simple words:</b> Bedrock is a menu of top foundation models behind one API. No servers to manage; you pay as you use.</div>
+  <ul>
+    <li><b>Fully managed, serverless</b>; single API for many FMs: Anthropic <b>Claude</b>, Amazon <b>Nova/Titan</b>, Meta <b>Llama</b>, <b>Mistral</b>, <b>Cohere</b>, <b>AI21 Labs</b>, <b>Stability AI</b>.</li>
+    <li><b>Privacy:</b> your prompts and data are <b>not used to train the base models</b>; data is encrypted; fine-tuned copies are private to you.</li>
+    <li><b>Key features:</b> Knowledge Bases (RAG), Agents, Guardrails, Model customization (fine-tuning, continued pre-training), Model evaluation, Prompt management, Playgrounds, Batch inference, Provisioned Throughput.</li>
+    <li><b>Titan</b> models: text, embeddings, multimodal embeddings, image generator.</li>
+    <li>Integrates with IAM, KMS, CloudWatch, CloudTrail, VPC (PrivateLink).</li>
+    <li><b>Bedrock vs SageMaker JumpStart:</b> Bedrock = simplest, API-only. JumpStart = more control, you host the model on your instances.</li>
+    <li>Choosing a model: task fit, quality, cost, latency, context size, modality, languages, licence/provider.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> “Build a GenAI app with multiple FM choices with least overhead” → Bedrock. “Data must not train provider models” → Bedrock guarantees this.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 336" role="img" aria-label="Amazon Bedrock architecture"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="110" width="120" height="70" rx="9"/><text x="70.0" y="141.5" text-anchor="middle">Your app</text><text class="s" x="70.0" y="157.5" text-anchor="middle">web, mobile, Lambda</text><line x1="130" y1="145" x2="170" y2="145" marker-end="url(#ah)"/><rect class="b" x="170" y="8" width="580" height="320" rx="12"/><text class="" x="460" y="32" text-anchor="middle">Amazon Bedrock  (one serverless API)</text><rect class="bo" x="185" y="50" width="104" height="46" rx="9"/><text x="237.0" y="77.5" text-anchor="middle">Guardrails</text><rect class="bo" x="297" y="50" width="104" height="46" rx="9"/><text x="349.0" y="69.5" text-anchor="middle">Knowledge</text><text x="349.0" y="85.5" text-anchor="middle">Bases</text><rect class="bo" x="409" y="50" width="104" height="46" rx="9"/><text x="461.0" y="77.5" text-anchor="middle">Agents</text><rect class="bo" x="521" y="50" width="104" height="46" rx="9"/><text x="573.0" y="77.5" text-anchor="middle">Customization</text><rect class="bo" x="633" y="50" width="104" height="46" rx="9"/><text x="685.0" y="77.5" text-anchor="middle">Evaluation</text><text class="s" x="460" y="124" text-anchor="middle">Foundation models (pick one per request)</text><rect class="ba" x="185" y="136" width="130" height="44" rx="9"/><text x="250.0" y="162.5" text-anchor="middle">Anthropic Claude</text><rect class="ba" x="325" y="136" width="130" height="44" rx="9"/><text x="390.0" y="162.5" text-anchor="middle">Amazon Nova/Titan</text><rect class="ba" x="465" y="136" width="130" height="44" rx="9"/><text x="530.0" y="162.5" text-anchor="middle">Meta Llama</text><rect class="ba" x="605" y="136" width="130" height="44" rx="9"/><text x="670.0" y="162.5" text-anchor="middle">Mistral AI</text><rect class="ba" x="185" y="190" width="130" height="44" rx="9"/><text x="250.0" y="216.5" text-anchor="middle">Cohere</text><rect class="ba" x="325" y="190" width="130" height="44" rx="9"/><text x="390.0" y="216.5" text-anchor="middle">AI21 Labs</text><rect class="ba" x="465" y="190" width="130" height="44" rx="9"/><text x="530.0" y="216.5" text-anchor="middle">Stability AI</text><rect class="ba" x="605" y="190" width="130" height="44" rx="9"/><text x="670.0" y="216.5" text-anchor="middle">and more</text><rect class="bg" x="185" y="252" width="275" height="60" rx="9"/><text x="322.5" y="278.5" text-anchor="middle">Security: IAM, KMS, PrivateLink</text><text class="s" x="322.5" y="294.5" text-anchor="middle">CloudTrail + CloudWatch logging</text><rect class="bg" x="475" y="252" width="265" height="60" rx="9"/><text x="607.5" y="278.5" text-anchor="middle">Your prompts and data are NOT</text><text class="s" x="607.5" y="294.5" text-anchor="middle">used to train the base models</text></svg><figcaption><b>In simple words:</b> Bedrock is a menu of models behind one API, plus ready-made add-ons for RAG, safety, agents, tuning, and evaluation. No servers to manage.</figcaption></figure>
+<div class="quiz" data-q="t8"></div>
+</section>
+
+<section class="topic" id="t9">
+  <span class="dom">Domain 2 · Fundamentals of Generative AI</span>
+  <h2>9. Amazon Q, PartyRock &amp; GenAI Business Use Cases</h2>
+  <div class="simple"><b>In simple words:</b> Amazon Q is a ready-made AI assistant for work. PartyRock is a free playground to build small AI apps with no code.</div>
+  <ul>
+    <li><b>Amazon Q Business:</b> chat over your company data (S3, SharePoint, Salesforce, Slack, etc. via connectors). Honours existing user permissions. Summaries, Q&amp;A, content generation.</li>
+    <li><b>Amazon Q Developer:</b> coding assistant in IDE/CLI/console: generate code, explain, debug, upgrade Java, security scan, answer AWS questions.</li>
+    <li><b>Q in QuickSight:</b> ask business-intelligence questions in natural language. <b>Q in Connect:</b> helps contact center agents.</li>
+    <li><b>PartyRock:</b> Bedrock-powered playground, no AWS account or coding needed – for learning and prototyping.</li>
+    <li><b>Use cases:</b> chatbots, summarisation, content creation, code generation, search, translation, image generation, personalization, data extraction, customer-support agents.</li>
+    <li><b>Business metrics for GenAI:</b> user satisfaction, average revenue per user, cross-domain performance, conversion rate, efficiency, cost saved.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> Code help → Q Developer. Internal knowledge assistant → Q Business. Free experimentation without code → PartyRock.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 290" role="img" aria-label="Amazon Q Business connects employees to enterprise data sources"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="90" width="150" height="80" rx="9"/><text x="85.0" y="126.5" text-anchor="middle">Employees</text><text class="s" x="85.0" y="142.5" text-anchor="middle">ask questions in chat</text><line x1="160" y1="130" x2="255" y2="130" marker-end="url(#ah)" marker-start="url(#ah)"/><rect class="ba" x="255" y="60" width="220" height="140" rx="9"/><text x="365.0" y="118.5" text-anchor="middle">Amazon Q Business</text><text class="s" x="365.0" y="134.5" text-anchor="middle">chat, summarize, take actions</text><text class="s" x="365.0" y="150.5" text-anchor="middle">honors each user's permissions</text><rect class="b" x="255" y="225" width="220" height="50" rx="9"/><text x="365.0" y="246.5" text-anchor="middle">IAM Identity Center</text><text class="s" x="365.0" y="262.5" text-anchor="middle">single sign-on</text><line x1="365" y1="225" x2="365" y2="200" marker-end="url(#ah)"/><rect class="bo" x="570" y="15" width="180" height="50" rx="9"/><text x="660.0" y="44.5" text-anchor="middle">Amazon S3</text><line x1="475" y1="130" x2="570" y2="40" marker-end="url(#ah)"/><rect class="bo" x="570" y="81" width="180" height="50" rx="9"/><text x="660.0" y="110.5" text-anchor="middle">SharePoint / Confluence</text><line x1="475" y1="130" x2="570" y2="106" marker-end="url(#ah)"/><rect class="bo" x="570" y="147" width="180" height="50" rx="9"/><text x="660.0" y="176.5" text-anchor="middle">Slack / Teams</text><line x1="475" y1="130" x2="570" y2="172" marker-end="url(#ah)"/><rect class="bo" x="570" y="213" width="180" height="50" rx="9"/><text x="660.0" y="242.5" text-anchor="middle">Salesforce / Jira</text><line x1="475" y1="130" x2="570" y2="238" marker-end="url(#ah)"/></svg><figcaption><b>In simple words:</b> Amazon Q Business is a ready-made company assistant. It plugs into your tools with connectors (the arrows), and it only shows each person what they are allowed to see.</figcaption></figure>
+<div class="quiz" data-q="t9"></div>
+</section>
+
+<!-- ============ DOMAIN 3 ============ -->
+<section class="topic" id="t10">
+  <span class="dom">Domain 3 · Applications of Foundation Models</span>
+  <h2>10. Prompt Engineering</h2>
+  <div class="simple"><b>In simple words:</b> Prompt engineering = writing better instructions so the model gives better answers, without changing the model.</div>
+  <h3>Parts of a good prompt</h3>
+  <p>Instruction · Context · Input data · Output format/indicator · Persona/role · Constraints.</p>
+  <h3>Techniques</h3>
+  <table>
+    <tr><th>Technique</th><th>Meaning</th></tr>
+    <tr><td>Zero-shot</td><td>No examples, just the task</td></tr>
+    <tr><td>Single/Few-shot</td><td>Give 1 / several examples in the prompt (in-context learning)</td></tr>
+    <tr><td>Chain-of-thought</td><td>Ask the model to reason step by step ("think step by step")</td></tr>
+    <tr><td>Prompt templates</td><td>Reusable structure with placeholders</td></tr>
+    <tr><td>Negative prompts</td><td>Say what to avoid (common in image generation)</td></tr>
+    <tr><td>System prompt</td><td>Sets behaviour/role for the whole conversation</td></tr>
+  </table>
+  <h3>Best practices</h3>
+  <ul><li>Be clear, concise, specific; give context and examples; specify format (JSON, bullets); use delimiters; iterate/experiment.</li></ul>
+  <h3>Prompt attacks (also Domain 5)</h3>
+  <ul>
+    <li><b>Prompt injection:</b> hidden instructions override the original ones.</li>
+    <li><b>Jailbreaking:</b> tricking the model into ignoring safety rules.</li>
+    <li><b>Prompt leaking / poisoning:</b> exposing system prompt / tainting data.</li>
+    <li>Defence: Guardrails, input validation, least privilege for agents, monitoring.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> Prompting does NOT change model weights (fine-tuning does). It is the cheapest first step.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 270" role="img" aria-label="Parts of a prompt and prompting techniques"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="10" y="10" width="410" height="44" rx="9"/><text x="215.0" y="28.5" text-anchor="middle">Role / persona</text><text class="s" x="215.0" y="44.5" text-anchor="middle">You are a friendly tax advisor.</text><rect class="ba" x="10" y="62" width="410" height="44" rx="9"/><text x="215.0" y="80.5" text-anchor="middle">Instruction</text><text class="s" x="215.0" y="96.5" text-anchor="middle">Summarize the text below.</text><rect class="ba" x="10" y="114" width="410" height="44" rx="9"/><text x="215.0" y="132.5" text-anchor="middle">Context</text><text class="s" x="215.0" y="148.5" text-anchor="middle">Audience: beginners. Keep it short.</text><rect class="ba" x="10" y="166" width="410" height="44" rx="9"/><text x="215.0" y="184.5" text-anchor="middle">Input data</text><text class="s" x="215.0" y="200.5" text-anchor="middle">&lt;text&gt; ...document... &lt;/text&gt;</text><rect class="ba" x="10" y="218" width="410" height="44" rx="9"/><text x="215.0" y="236.5" text-anchor="middle">Output format</text><text class="s" x="215.0" y="252.5" text-anchor="middle">Return 3 bullet points as JSON.</text><rect class="b" x="450" y="10" width="300" height="74" rx="9"/><text x="600.0" y="43.5" text-anchor="middle">Zero-shot</text><text class="s" x="600.0" y="59.5" text-anchor="middle">just the task, no examples</text><rect class="bo" x="450" y="94" width="300" height="74" rx="9"/><text x="600.0" y="127.5" text-anchor="middle">Few-shot</text><text class="s" x="600.0" y="143.5" text-anchor="middle">add 2-3 examples (in-context learning)</text><rect class="bg" x="450" y="178" width="300" height="74" rx="9"/><text x="600.0" y="211.5" text-anchor="middle">Chain-of-thought</text><text class="s" x="600.0" y="227.5" text-anchor="middle">"think step by step" for reasoning</text></svg><figcaption><b>In simple words:</b> A good prompt is clear, specific, and structured. Examples in the prompt teach the model without changing its weights.</figcaption></figure>
+<div class="quiz" data-q="t10"></div>
+</section>
+
+<section class="topic" id="t11">
+  <span class="dom">Domain 3 · Applications of Foundation Models</span>
+  <h2>11. Inference Parameters</h2>
+  <div class="simple"><b>In simple words:</b> These are dials you turn at request time to change how creative, long or random the output is.</div>
+  <table>
+    <tr><th>Parameter</th><th>What it does</th></tr>
+    <tr><td><b>Temperature</b></td><td>Randomness. Low (0–0.3) = focused, consistent, factual. High (0.8–1) = creative, varied.</td></tr>
+    <tr><td><b>Top P</b></td><td>Choose from the smallest set of tokens whose probabilities add up to P (e.g., 0.9). Lower = safer.</td></tr>
+    <tr><td><b>Top K</b></td><td>Choose only from the K most likely next tokens. Lower = safer.</td></tr>
+    <tr><td><b>Max tokens / length</b></td><td>Caps the response size (also controls cost).</td></tr>
+    <tr><td><b>Stop sequences</b></td><td>Strings that make the model stop generating.</td></tr>
+  </table>
+  <ul>
+    <li>These do not change model weights; they change sampling.</li>
+    <li>Larger context window = can handle longer documents but costs more.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> “Consistent, deterministic answers” → low temperature. “Creative brainstorming” → high temperature.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 280" role="img" aria-label="Bar charts comparing next-word probabilities at low and high temperature"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><text class="s" x="380" y="16" text-anchor="middle">Prompt: "The sky is ___"  (probability of each next word)</text><rect class="b" x="20" y="30" width="340" height="215" rx="9"/><text class="" x="190" y="52" text-anchor="middle">Low temperature (0.2)</text><text class="s" x="190" y="68" text-anchor="middle">predictable, repeatable</text><rect x="42" y="117.25000000000001" width="52" height="97.74999999999999" rx="4" fill="var(--accent2)"/><text class="s" x="68" y="112.25000000000001" text-anchor="middle">85%</text><text class="" x="68" y="234" text-anchor="middle">blue</text><rect x="118" y="203.5" width="52" height="11.5" rx="4" fill="var(--accent2)"/><text class="s" x="144" y="198.5" text-anchor="middle">10%</text><text class="" x="144" y="234" text-anchor="middle">clear</text><rect x="194" y="210.4" width="52" height="4.6" rx="4" fill="var(--accent2)"/><text class="s" x="220" y="205.4" text-anchor="middle">4%</text><text class="" x="220" y="234" text-anchor="middle">grey</text><rect x="270" y="213.85" width="52" height="1.15" rx="4" fill="var(--accent2)"/><text class="s" x="296" y="208.85" text-anchor="middle">1%</text><text class="" x="296" y="234" text-anchor="middle">falling</text><rect class="b" x="400" y="30" width="340" height="215" rx="9"/><text class="" x="570" y="52" text-anchor="middle">High temperature (1.0)</text><text class="s" x="570" y="68" text-anchor="middle">more variety, creative</text><rect x="422" y="169.0" width="52" height="46.0" rx="4" fill="var(--accent2)"/><text class="s" x="448" y="164.0" text-anchor="middle">40%</text><text class="" x="448" y="234" text-anchor="middle">blue</text><rect x="498" y="186.25" width="52" height="28.749999999999996" rx="4" fill="var(--accent2)"/><text class="s" x="524" y="181.25" text-anchor="middle">25%</text><text class="" x="524" y="234" text-anchor="middle">clear</text><rect x="574" y="192.0" width="52" height="23.0" rx="4" fill="var(--accent2)"/><text class="s" x="600" y="187.0" text-anchor="middle">20%</text><text class="" x="600" y="234" text-anchor="middle">grey</text><rect x="650" y="197.75" width="52" height="17.25" rx="4" fill="var(--accent2)"/><text class="s" x="676" y="192.75" text-anchor="middle">15%</text><text class="" x="676" y="234" text-anchor="middle">falling</text><text class="s" x="380" y="268" text-anchor="middle">Top P 0.9 = sample only from the most likely words until their probabilities add up to 90%.</text></svg><figcaption><b>In simple words:</b> Temperature reshapes the odds. Low makes the favorite word almost always win. High gives underdogs a chance, so answers vary.</figcaption></figure>
+<div class="quiz" data-q="t11"></div>
+</section>
+
+<section class="topic" id="t12">
+  <span class="dom">Domain 3 · Applications of Foundation Models</span>
+  <h2>12. RAG, Embeddings &amp; Vector Databases</h2>
+  <div class="simple"><b>In simple words:</b> RAG (Retrieval-Augmented Generation) = before answering, the app looks up relevant facts from your documents and pastes them into the prompt. The model answers from those facts, so fewer hallucinations and no retraining.</div>
+  <h3>How it works</h3>
+  <ol>
+    <li>Split documents into chunks → create embeddings with an embeddings model (e.g., Titan Embeddings, Cohere Embed).</li>
+    <li>Store vectors in a <b>vector database</b>.</li>
+    <li>User asks a question → embed the question → <b>similarity search</b> → fetch top chunks.</li>
+    <li>Add chunks to the prompt (augmentation) → FM generates a grounded answer (can cite sources).</li>
+  </ol>
+  <h3>AWS pieces</h3>
+  <ul>
+    <li><b>Knowledge Bases for Amazon Bedrock:</b> fully managed RAG – ingests S3 data, chunks, embeds, stores, retrieves, and cites.</li>
+    <li><b>Vector stores:</b> OpenSearch Service / Serverless, Aurora PostgreSQL &amp; RDS PostgreSQL (pgvector), DocumentDB, Neptune, MemoryDB; third party Pinecone, Redis, MongoDB Atlas.</li>
+    <li>Use cases: customer-support bots, internal Q&amp;A, up-to-date info, domain-specific answers.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> RAG vs fine-tuning – RAG for <b>fresh/changing facts</b> and citations; fine-tuning for <b>style/behaviour/task skill</b>. RAG is cheaper and easier to update.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 275" role="img" aria-label="RAG architecture with ingest and answer phases"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><text class="s" x="11" y="16" text-anchor="start">1  Ingest  (done once, offline)</text><rect class="b" x="11" y="24" width="108" height="56" rx="9"/><text x="65.0" y="48.5" text-anchor="middle">Documents</text><text class="s" x="65.0" y="64.5" text-anchor="middle">in Amazon S3</text><rect class="b" x="137" y="24" width="108" height="56" rx="9"/><text x="191.0" y="48.5" text-anchor="middle">Chunk</text><text class="s" x="191.0" y="64.5" text-anchor="middle">split into pieces</text><rect class="bo" x="263" y="24" width="108" height="56" rx="9"/><text x="317.0" y="40.5" text-anchor="middle">Embedding</text><text x="317.0" y="56.5" text-anchor="middle">model</text><text class="s" x="317.0" y="72.5" text-anchor="middle">Titan / Cohere</text><line x1="119" y1="52" x2="137" y2="52" marker-end="url(#ah)"/><line x1="245" y1="52" x2="263" y2="52" marker-end="url(#ah)"/><line x1="317" y1="80" x2="317" y2="108" marker-end="url(#ah)"/><rect class="bg" x="263" y="108" width="108" height="56" rx="9"/><text x="317.0" y="132.5" text-anchor="middle">Vector DB</text><text class="s" x="317.0" y="148.5" text-anchor="middle">OpenSearch etc.</text><text class="s" x="11" y="188" text-anchor="start">2  Answer  (every question)</text><rect class="b" x="11" y="196" width="108" height="60" rx="9"/><text x="65.0" y="222.5" text-anchor="middle">Question</text><text class="s" x="65.0" y="238.5" text-anchor="middle">user asks</text><line x1="119" y1="226" x2="137" y2="226" marker-end="url(#ah)"/><rect class="bo" x="137" y="196" width="108" height="60" rx="9"/><text x="191.0" y="214.5" text-anchor="middle">Embed</text><text x="191.0" y="230.5" text-anchor="middle">question</text><text class="s" x="191.0" y="246.5" text-anchor="middle">same model</text><line x1="245" y1="226" x2="263" y2="226" marker-end="url(#ah)"/><rect class="bg" x="263" y="196" width="108" height="60" rx="9"/><text x="317.0" y="214.5" text-anchor="middle">Similarity</text><text x="317.0" y="230.5" text-anchor="middle">search</text><text class="s" x="317.0" y="246.5" text-anchor="middle">nearest chunks</text><line x1="371" y1="226" x2="389" y2="226" marker-end="url(#ah)"/><rect class="b" x="389" y="196" width="108" height="60" rx="9"/><text x="443.0" y="222.5" text-anchor="middle">Top chunks</text><text class="s" x="443.0" y="238.5" text-anchor="middle">relevant facts</text><line x1="497" y1="226" x2="515" y2="226" marker-end="url(#ah)"/><rect class="ba" x="515" y="196" width="108" height="60" rx="9"/><text x="569.0" y="214.5" text-anchor="middle">Augmented</text><text x="569.0" y="230.5" text-anchor="middle">prompt</text><text class="s" x="569.0" y="246.5" text-anchor="middle">question + facts</text><line x1="623" y1="226" x2="641" y2="226" marker-end="url(#ah)"/><rect class="ba" x="641" y="196" width="108" height="60" rx="9"/><text x="695.0" y="214.5" text-anchor="middle">Foundation</text><text x="695.0" y="230.5" text-anchor="middle">model</text><text class="s" x="695.0" y="246.5" text-anchor="middle">answer + citations</text><line x1="317" y1="164" x2="317" y2="196" marker-end="url(#ah)" marker-start="url(#ah)"/></svg><figcaption><b>In simple words:</b> RAG = look up the facts first, then let the model write the answer using only those facts. No retraining, and the answer can cite its sources. This is what Bedrock Knowledge Bases manages for you.</figcaption></figure>
+<div class="quiz" data-q="t12"></div>
+</section>
+
+<section class="topic" id="t13">
+  <span class="dom">Domain 3 · Applications of Foundation Models</span>
+  <h2>13. Customizing Foundation Models</h2>
+  <div class="simple"><b>In simple words:</b> If prompts and RAG aren't enough, you can retrain the model a little (or a lot) on your own data.</div>
+  <table>
+    <tr><th>Approach</th><th>Data</th><th>Notes</th></tr>
+    <tr><td>Prompt engineering</td><td>none</td><td>Cheapest, instant</td></tr>
+    <tr><td>RAG</td><td>your documents</td><td>No training; up-to-date answers</td></tr>
+    <tr><td><b>Fine-tuning</b> (instruction)</td><td><b>Labeled</b> prompt→response pairs</td><td>Changes weights; teaches task/style. Needs good-quality data.</td></tr>
+    <tr><td><b>Continued pre-training</b></td><td><b>Unlabeled</b> domain text</td><td>Teaches domain vocabulary/knowledge</td></tr>
+    <tr><td>Distillation</td><td>teacher model outputs</td><td>Smaller, cheaper student model</td></tr>
+    <tr><td>Train from scratch</td><td>Massive data</td><td>Most expensive – rarely right answer</td></tr>
+  </table>
+  <ul>
+    <li>In Bedrock, data comes from S3; the custom model is private; running a custom model needs <b>Provisioned Throughput</b>.</li>
+    <li>Data prep: curate, clean, label, remove bias/PII, representative, enough volume.</li>
+    <li>Risk: <b>catastrophic forgetting</b> (model loses general ability) if over-tuned.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> labeled → fine-tuning; unlabeled → continued pre-training.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 292" role="img" aria-label="Staircase from prompt engineering to training from scratch"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="bg" x="10" y="183" width="138" height="52" rx="9"/><text class="" x="79" y="207" text-anchor="middle">Prompt</text><text class="" x="79" y="223" text-anchor="middle">engineering</text><text class="s" x="79" y="176" text-anchor="middle">minutes, no training</text><rect class="bg" x="158" y="147" width="138" height="88" rx="9"/><text class="" x="227" y="171" text-anchor="middle">RAG</text><text class="s" x="227" y="140" text-anchor="middle">your docs, no training</text><rect class="bo" x="306" y="111" width="138" height="124" rx="9"/><text class="" x="375" y="135" text-anchor="middle">Fine-tuning</text><text class="s" x="375" y="104" text-anchor="middle">labeled examples</text><rect class="bo" x="454" y="75" width="138" height="160" rx="9"/><text class="" x="523" y="99" text-anchor="middle">Continued</text><text class="" x="523" y="115" text-anchor="middle">pre-training</text><text class="s" x="523" y="68" text-anchor="middle">unlabeled domain text</text><rect class="br" x="602" y="39" width="138" height="196" rx="9"/><text class="" x="671" y="63" text-anchor="middle">Train from</text><text class="" x="671" y="79" text-anchor="middle">scratch</text><text class="s" x="671" y="32" text-anchor="middle">huge data + months</text><line x1="10" y1="262" x2="740" y2="262" marker-end="url(#ah)"/><text class="s" x="375" y="282" text-anchor="middle">more cost, more effort, more data</text></svg><figcaption><b>In simple words:</b> Always start from the left. Only climb to the next step if the cheaper one cannot solve the problem. Labeled data means fine-tuning; unlabeled means continued pre-training.</figcaption></figure>
+<div class="quiz" data-q="t13"></div>
+</section>
+
+<section class="topic" id="t14">
+  <span class="dom">Domain 3 · Applications of Foundation Models</span>
+  <h2>14. Agents &amp; Guardrails</h2>
+  <div class="simple"><b>In simple words:</b> An agent is an AI that plans steps and uses tools to finish a task. Guardrails are safety fences around the model.</div>
+  <h3>Agents for Amazon Bedrock</h3>
+  <ul>
+    <li>Break a user request into steps (reasoning/orchestration), call <b>action groups</b> (APIs, usually Lambda functions), query Knowledge Bases, and return the final result.</li>
+    <li>Example: “Book my trip and update the CRM” → multiple API calls automatically.</li>
+    <li>Related: Bedrock AgentCore / multi-agent collaboration for building agent systems.</li>
+  </ul>
+  <h3>Guardrails for Amazon Bedrock</h3>
+  <ul>
+    <li><b>Content filters:</b> hate, insults, sexual, violence, misconduct, prompt attacks.</li>
+    <li><b>Denied topics</b> (e.g., no investment advice), <b>word filters</b>, <b>PII filters</b> (block/mask), <b>contextual grounding check</b> (detect hallucination &amp; irrelevant answers).</li>
+    <li>Applies to both user input and model output; works across FMs; also via the ApplyGuardrail API.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> Guardrails = safety policy layer. Agents = actions/orchestration. Don't confuse with Clarify (bias analysis) or IAM (permissions).</div>
+  <figure class="diagram"><svg viewBox="0 0 760 222" role="img" aria-label="Guardrails check input and output around a foundation model"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="60" width="120" height="54" rx="9"/><text x="70.0" y="91.5" text-anchor="middle">User prompt</text><line x1="130" y1="87" x2="160" y2="87" marker-end="url(#ah)"/><rect class="bo" x="160" y="60" width="120" height="54" rx="9"/><text x="220.0" y="83.5" text-anchor="middle">Guardrail</text><text class="s" x="220.0" y="99.5" text-anchor="middle">input check</text><line x1="280" y1="87" x2="310" y2="87" marker-end="url(#ah)"/><rect class="ba" x="310" y="60" width="120" height="54" rx="9"/><text x="370.0" y="91.5" text-anchor="middle">Foundation model</text><line x1="430" y1="87" x2="460" y2="87" marker-end="url(#ah)"/><rect class="bo" x="460" y="60" width="120" height="54" rx="9"/><text x="520.0" y="83.5" text-anchor="middle">Guardrail</text><text class="s" x="520.0" y="99.5" text-anchor="middle">output check</text><line x1="580" y1="87" x2="610" y2="87" marker-end="url(#ah)"/><rect class="bg" x="610" y="60" width="120" height="54" rx="9"/><text x="670.0" y="91.5" text-anchor="middle">Safe answer</text><text class="s" x="205" y="44" text-anchor="middle">denied topics, PII, prompt attacks</text><text class="s" x="505" y="44" text-anchor="middle">toxicity, PII, ungrounded answers</text><line x1="220" y1="114" x2="300" y2="160" marker-end="url(#ah)"/><line x1="520" y1="114" x2="440" y2="160" marker-end="url(#ah)"/><rect class="br" x="250" y="160" width="240" height="46" rx="9"/><text x="370.0" y="187.5" text-anchor="middle">Blocked / masked message</text></svg><figcaption><b>In simple words:</b> Guardrails are a safety sandwich around the model. They check what goes in and what comes out, whatever model you use.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 760 290" role="img" aria-label="Agent loop with action groups, knowledge base and guardrails"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="90" width="120" height="60" rx="9"/><text x="70.0" y="116.5" text-anchor="middle">User request</text><text class="s" x="70.0" y="132.5" text-anchor="middle">book my trip</text><line x1="130" y1="120" x2="175" y2="120" marker-end="url(#ah)"/><rect class="ba" x="175" y="50" width="190" height="140" rx="9"/><text x="270.0" y="100.5" text-anchor="middle">Agent</text><text class="s" x="270.0" y="116.5" text-anchor="middle">FM reasons and plans</text><text class="s" x="270.0" y="132.5" text-anchor="middle">1 plan steps  2 pick tool</text><text class="s" x="270.0" y="148.5" text-anchor="middle">3 read result  4 repeat</text><rect class="bo" x="430" y="15" width="170" height="56" rx="9"/><text x="515.0" y="39.5" text-anchor="middle">Action group</text><text class="s" x="515.0" y="55.5" text-anchor="middle">Lambda / API calls</text><rect class="bo" x="430" y="92" width="170" height="56" rx="9"/><text x="515.0" y="116.5" text-anchor="middle">Knowledge Base</text><text class="s" x="515.0" y="132.5" text-anchor="middle">RAG over your docs</text><rect class="bo" x="430" y="169" width="170" height="56" rx="9"/><text x="515.0" y="193.5" text-anchor="middle">Guardrails</text><text class="s" x="515.0" y="209.5" text-anchor="middle">safety checks</text><line x1="365" y1="120" x2="430" y2="43" marker-end="url(#ah)" marker-start="url(#ah)"/><line x1="365" y1="120" x2="430" y2="120" marker-end="url(#ah)" marker-start="url(#ah)"/><line x1="365" y1="120" x2="430" y2="197" marker-end="url(#ah)" marker-start="url(#ah)"/><rect class="b" x="640" y="15" width="110" height="56" rx="9"/><text x="695.0" y="39.5" text-anchor="middle">CRM, booking</text><text class="s" x="695.0" y="55.5" text-anchor="middle">business systems</text><rect class="b" x="640" y="92" width="110" height="56" rx="9"/><text x="695.0" y="124.5" text-anchor="middle">S3 + vector DB</text><line x1="600" y1="43" x2="640" y2="43" marker-end="url(#ah)"/><line x1="600" y1="120" x2="640" y2="120" marker-end="url(#ah)"/><line x1="270" y1="190" x2="270" y2="235" marker-end="url(#ah)"/><rect class="bg" x="170" y="235" width="200" height="40" rx="9"/><text x="270.0" y="259.5" text-anchor="middle">Final answer to user</text></svg><figcaption><b>In simple words:</b> An agent is a model that can plan and use tools. You give a goal; it decides the steps, calls APIs or searches documents, and reports back.</figcaption></figure>
+<div class="quiz" data-q="t14"></div>
+</section>
+
+<section class="topic" id="t15">
+  <span class="dom">Domain 3 · Applications of Foundation Models</span>
+  <h2>15. Evaluating Foundation Models</h2>
+  <div class="simple"><b>In simple words:</b> Check whether the GenAI output is good — automatically with scores, with humans, or with another LLM as judge.</div>
+  <table>
+    <tr><th>Metric</th><th>For</th><th>Idea</th></tr>
+    <tr><td><b>ROUGE</b></td><td>Summarization</td><td>Word/phrase overlap with a reference summary (recall-oriented)</td></tr>
+    <tr><td><b>BLEU</b></td><td>Translation</td><td>Overlap of n-grams with reference translation (precision-oriented)</td></tr>
+    <tr><td><b>BERTScore</b></td><td>Any text</td><td>Semantic similarity using embeddings (meaning, not exact words)</td></tr>
+    <tr><td>Perplexity</td><td>Language models</td><td>How "surprised" the model is; lower = better</td></tr>
+  </table>
+  <ul>
+    <li><b>Benchmarks:</b> GLUE, SuperGLUE, MMLU, BIG-bench, HELM, WMT.</li>
+    <li><b>Bedrock Model Evaluation:</b> automatic (built-in/curated datasets), human (your team or AWS-managed workforce), and LLM-as-a-judge. Also RAG evaluation.</li>
+    <li>Judge: accuracy, relevance, robustness, toxicity, fluency, helpfulness, cost, latency.</li>
+    <li>Compare models on <b>your</b> task and data, not only on public benchmarks.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> ROUGE = summaries, BLEU = translation, BERTScore = semantic similarity. Memorise.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 272" role="img" aria-label="Evaluation methods and metrics for foundation models"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="10" y="15" width="230" height="66" rx="9"/><text x="125.0" y="44.5" text-anchor="middle">Automatic</text><text class="s" x="125.0" y="60.5" text-anchor="middle">ROUGE, BLEU, BERTScore</text><rect class="bo" x="265" y="15" width="230" height="66" rx="9"/><text x="380.0" y="44.5" text-anchor="middle">Human</text><text class="s" x="380.0" y="60.5" text-anchor="middle">tone, helpfulness, brand fit</text><rect class="bg" x="520" y="15" width="230" height="66" rx="9"/><text x="635.0" y="44.5" text-anchor="middle">LLM-as-a-judge</text><text class="s" x="635.0" y="60.5" text-anchor="middle">a model scores another model</text><rect class="b" x="10" y="110" width="230" height="74" rx="9"/><text x="125.0" y="143.5" text-anchor="middle">ROUGE</text><text class="s" x="125.0" y="159.5" text-anchor="middle">summaries: word overlap</text><rect class="b" x="265" y="110" width="230" height="74" rx="9"/><text x="380.0" y="143.5" text-anchor="middle">BLEU</text><text class="s" x="380.0" y="159.5" text-anchor="middle">translation: n-gram overlap</text><rect class="b" x="520" y="110" width="230" height="74" rx="9"/><text x="635.0" y="143.5" text-anchor="middle">BERTScore</text><text class="s" x="635.0" y="159.5" text-anchor="middle">meaning match using embeddings</text><text class="" x="380" y="215" text-anchor="middle">Reference: "The cat sat on the mat"</text><text class="" x="380" y="235" text-anchor="middle">Generated: "A cat was sitting on the mat"</text><text class="s" x="380" y="258" text-anchor="middle">Few exact words match, so ROUGE / BLEU are low-ish. BERTScore is high: same meaning.</text></svg><figcaption><b>In simple words:</b> Three ways to grade a model (top). The three famous scores (middle) differ in what they compare: exact words or meaning.</figcaption></figure>
+<div class="quiz" data-q="t15"></div>
+</section>
+
+<!-- ============ DOMAIN 4 ============ -->
+<section class="topic" id="t16">
+  <span class="dom">Domain 4 · Guidelines for Responsible AI</span>
+  <h2>16. Responsible AI &amp; Bias</h2>
+  <div class="simple"><b>In simple words:</b> Build AI that is fair, safe, explainable, private and accountable — and keep checking it.</div>
+  <h3>AWS core dimensions of responsible AI</h3>
+  <p><b>Fairness · Explainability · Privacy &amp; security · Safety · Controllability · Veracity &amp; robustness · Governance · Transparency</b></p>
+  <h3>Bias &amp; fairness</h3>
+  <ul>
+    <li>Causes: unrepresentative or historical-biased data, sampling bias, labeling bias, proxy features.</li>
+    <li>Mitigate: diverse/representative data, bias audits (Clarify), balanced datasets, human review, testing across groups, ongoing monitoring.</li>
+    <li>Impact of bias: unfair decisions, legal/reputation harm, loss of trust.</li>
+  </ul>
+  <h3>GenAI-specific risks</h3>
+  <ul>
+    <li>Toxicity, hallucination, intellectual property, plagiarism, deepfakes, misuse, privacy leakage.</li>
+    <li>Mitigate: Guardrails, curated data, watermarks, human-in-the-loop, clear user disclosure.</li>
+  </ul>
+  <h3>Selecting models responsibly</h3>
+  <ul><li>Consider environmental impact (energy), licensing, safety record, risk level of the use case (high risk = more oversight, e.g., hiring, lending, healthcare).</li></ul>
+  <div class="tip"><b>Exam tip:</b> The answer is almost never “remove humans” — it's “diverse data + testing + oversight + transparency”.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 190" role="img" aria-label="Eight dimensions of responsible AI"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="10" y="12" width="177" height="76" rx="9"/><text x="98.5" y="46.5" text-anchor="middle">Fairness</text><text class="s" x="98.5" y="62.5" text-anchor="middle">no group harmed</text><rect class="ba" x="197" y="12" width="177" height="76" rx="9"/><text x="285.5" y="46.5" text-anchor="middle">Explainability</text><text class="s" x="285.5" y="62.5" text-anchor="middle">why this answer?</text><rect class="ba" x="384" y="12" width="177" height="76" rx="9"/><text x="472.5" y="46.5" text-anchor="middle">Privacy + security</text><text class="s" x="472.5" y="62.5" text-anchor="middle">protect data</text><rect class="ba" x="571" y="12" width="177" height="76" rx="9"/><text x="659.5" y="46.5" text-anchor="middle">Safety</text><text class="s" x="659.5" y="62.5" text-anchor="middle">avoid harm</text><rect class="bo" x="10" y="102" width="177" height="76" rx="9"/><text x="98.5" y="136.5" text-anchor="middle">Controllability</text><text class="s" x="98.5" y="152.5" text-anchor="middle">humans can steer</text><rect class="bo" x="197" y="102" width="177" height="76" rx="9"/><text x="285.5" y="136.5" text-anchor="middle">Veracity + robustness</text><text class="s" x="285.5" y="152.5" text-anchor="middle">correct, reliable</text><rect class="bo" x="384" y="102" width="177" height="76" rx="9"/><text x="472.5" y="136.5" text-anchor="middle">Governance</text><text class="s" x="472.5" y="152.5" text-anchor="middle">policies, audits</text><rect class="bo" x="571" y="102" width="177" height="76" rx="9"/><text x="659.5" y="136.5" text-anchor="middle">Transparency</text><text class="s" x="659.5" y="152.5" text-anchor="middle">document, disclose</text></svg><figcaption><b>In simple words:</b> Eight checks AWS uses to describe "responsible" AI. Exam answers lean on diverse data, human oversight, transparency, and ongoing monitoring.</figcaption></figure>
+<div class="quiz" data-q="t16"></div>
+</section>
+
+<section class="topic" id="t17">
+  <span class="dom">Domain 4 · Guidelines for Responsible AI</span>
+  <h2>17. Transparency, Explainability &amp; Human Oversight</h2>
+  <div class="simple"><b>In simple words:</b> Be able to explain what the model is, what data it used, why it decided that, and let a human step in.</div>
+  <ul>
+    <li><b>Transparent</b> = explain how the model works &amp; was built. <b>Explainable</b> = explain individual predictions. Trade-off: simple models (linear regression, decision trees) are more interpretable but often less accurate than complex neural networks.</li>
+    <li><b>SageMaker Clarify:</b> detect bias before/after training; explainability via feature importance (SHAP); can evaluate FMs.</li>
+    <li><b>SageMaker Model Cards:</b> document intended use, training data, risks, evaluation.</li>
+    <li><b>AWS AI Service Cards:</b> transparency docs for AWS AI services (intended use, limits).</li>
+    <li><b>Amazon A2I:</b> human review workflows for low-confidence predictions.</li>
+    <li><b>Ground Truth:</b> human labeling incl. RLHF feedback. <b>Model Monitor</b> tracks drift/bias over time.</li>
+    <li><b>Open source:</b> partial transparency, data lineage, source citation (RAG), documentation, <b>Guardrails</b>.</li>
+    <li><b>Human-centered design</b> – involve users, make controls obvious, allow feedback.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> “Explain why the model denied the loan” → Clarify. “Human validation of results” → A2I. “Document the model for auditors” → Model Cards.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 240" role="img" aria-label="Human-in-the-loop flow with Amazon A2I"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="85" width="100" height="50" rx="9"/><text x="60.0" y="106.5" text-anchor="middle">Input</text><text class="s" x="60.0" y="122.5" text-anchor="middle">document, image</text><line x1="110" y1="110" x2="145" y2="110" marker-end="url(#ah)"/><rect class="ba" x="145" y="85" width="110" height="50" rx="9"/><text x="200.0" y="106.5" text-anchor="middle">ML model</text><text class="s" x="200.0" y="122.5" text-anchor="middle">makes prediction</text><line x1="255" y1="110" x2="290" y2="110" marker-end="url(#ah)"/><polygon class="b" points="400,50 510,110 400,170 290,110"/><text class="" x="400" y="106" text-anchor="middle">Confidence</text><text class="s" x="400" y="123" text-anchor="middle">high enough?</text><line x1="470" y1="80" x2="545" y2="45" marker-end="url(#ah)"/><text class="s" x="520" y="52" text-anchor="middle">Yes</text><rect class="bg" x="545" y="20" width="205" height="52" rx="9"/><text x="647.5" y="50.5" text-anchor="middle">Auto-approve result</text><line x1="470" y1="140" x2="545" y2="175" marker-end="url(#ah)"/><text class="s" x="520" y="178" text-anchor="middle">No</text><rect class="bo" x="545" y="150" width="205" height="52" rx="9"/><text x="647.5" y="172.5" text-anchor="middle">Human review (A2I)</text><text class="s" x="647.5" y="188.5" text-anchor="middle">reviewer checks it</text><text class="s" x="647" y="228" text-anchor="middle">feedback can improve the model</text></svg><figcaption><b>In simple words:</b> Amazon A2I sends only the uncertain predictions to people. Machines handle the easy ones, humans handle the doubtful ones.</figcaption></figure>
+<div class="quiz" data-q="t17"></div>
+</section>
+
+<!-- ============ DOMAIN 5 ============ -->
+<section class="topic" id="t18">
+  <span class="dom">Domain 5 · Security, Compliance &amp; Governance</span>
+  <h2>18. Securing AI Systems</h2>
+  <div class="simple"><b>In simple words:</b> Same AWS security basics apply to AI: control who can use it (IAM), lock the data (encryption), keep traffic private (VPC), and watch for AI-specific attacks.</div>
+  <h3>Shared responsibility model</h3>
+  <p>AWS = security <b>OF</b> the cloud (hardware, infrastructure, managed service). You = security <b>IN</b> the cloud (data, IAM, configuration, prompts, applications).</p>
+  <h3>Controls</h3>
+  <table>
+    <tr><th>Need</th><th>Service</th></tr>
+    <tr><td>Who may call which model</td><td><b>IAM</b> – least privilege, roles, policies</td></tr>
+    <tr><td>Encrypt at rest / manage keys</td><td><b>AWS KMS</b>; TLS for in-transit</td></tr>
+    <tr><td>Private network access</td><td><b>VPC</b>, <b>AWS PrivateLink</b> / interface endpoints</td></tr>
+    <tr><td>Discover PII in S3</td><td><b>Amazon Macie</b></td></tr>
+    <tr><td>Vulnerability scans</td><td><b>Amazon Inspector</b></td></tr>
+    <tr><td>Threat detection</td><td><b>Amazon GuardDuty</b>; <b>Security Hub</b> aggregates findings</td></tr>
+    <tr><td>Store secrets</td><td><b>Secrets Manager</b></td></tr>
+    <tr><td>Logging &amp; monitoring</td><td>CloudTrail (API calls), CloudWatch (metrics/logs; Bedrock model-invocation logging)</td></tr>
+  </table>
+  <h3>AI-specific threats</h3>
+  <ul>
+    <li>Prompt injection, jailbreak, <b>data poisoning</b> (corrupt training data), model theft, sensitive-data disclosure, insecure output handling, excessive agent permissions (see OWASP Top 10 for LLMs).</li>
+    <li><b>Generative AI Security Scoping Matrix</b> – five scopes from using a consumer app (Scope 1) to building/training your own FM (Scope 5); more control = more responsibility.</li>
+    <li>Data protection: minimise data, mask/redact PII, secure data engineering (quality, integrity), access control, backups.</li>
+  </ul>
+  <figure class="diagram"><svg viewBox="0 0 760 325" role="img" aria-label="Shared responsibility model for AI workloads"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="10" y="10" width="740" height="150" rx="9"/><text x="380.0" y="65.5" text-anchor="middle">YOU (customer): security IN the cloud</text><text class="s" x="380.0" y="81.5" text-anchor="middle">Your data and prompts  |  IAM users, roles, least privilege</text><text class="s" x="380.0" y="97.5" text-anchor="middle">Encryption settings (KMS)  |  Guardrails and app code</text><text class="s" x="380.0" y="113.5" text-anchor="middle">Compliance of your own use case</text><rect class="bo" x="10" y="175" width="740" height="140" rx="9"/><text x="380.0" y="225.5" text-anchor="middle">AWS: security OF the cloud</text><text class="s" x="380.0" y="241.5" text-anchor="middle">Data centers, hardware, network, hypervisor</text><text class="s" x="380.0" y="257.5" text-anchor="middle">Software of managed services (Bedrock, SageMaker)</text><text class="s" x="380.0" y="273.5" text-anchor="middle">Model-hosting infrastructure</text></svg><figcaption><b>In simple words:</b> AWS secures the building and the machines. You secure what you put inside and who can open the door. The more you build yourself (own model), the more is on you.</figcaption></figure>
+<div class="quiz" data-q="t18"></div>
+</section>
+
+<section class="topic" id="t19">
+  <span class="dom">Domain 5 · Security, Compliance &amp; Governance</span>
+  <h2>19. Governance &amp; Compliance for AI</h2>
+  <div class="simple"><b>In simple words:</b> Governance = rules, records and proof that your AI is used legally and responsibly.</div>
+  <table>
+    <tr><th>Service</th><th>Purpose</th></tr>
+    <tr><td><b>AWS Artifact</b></td><td>Download AWS compliance reports/agreements (SOC, ISO, PCI)</td></tr>
+    <tr><td><b>AWS Audit Manager</b></td><td>Continuously collect evidence for audits</td></tr>
+    <tr><td><b>AWS Config</b></td><td>Track resource configuration and compliance rules</td></tr>
+    <tr><td><b>AWS CloudTrail</b></td><td>Record API calls (who did what, when)</td></tr>
+    <tr><td><b>AWS Trusted Advisor</b></td><td>Best-practice checks (cost, security, limits)</td></tr>
+    <tr><td><b>AWS Organizations / SCPs</b>, <b>Service Catalog</b>, <b>Control Tower</b></td><td>Multi-account guardrails &amp; approved resources</td></tr>
+    <tr><td><b>AWS Glue Data Catalog</b></td><td>Data catalog supporting lineage/discovery</td></tr>
+  </table>
+  <h3>Frameworks &amp; practices</h3>
+  <ul>
+    <li><b>Standards/regulations:</b> ISO/IEC 42001 (AI management system), NIST AI Risk Management Framework, EU AI Act (risk-based), GDPR, HIPAA, SOC, ISO 27001.</li>
+    <li><b>Data governance:</b> lineage, provenance, source citation, quality, retention policy, data residency, cataloguing, access logging.</li>
+    <li><b>AI governance:</b> governance board/roles, policies, risk assessment, model documentation, periodic review, incident response, <b>monitoring after deployment</b>.</li>
+    <li><b>Documentation:</b> Model Cards, AI Service Cards, data and model versioning.</li>
+  </ul>
+  <div class="tip"><b>Exam tip:</b> Artifact = reports about AWS. Audit Manager = evidence about <i>your</i> usage. CloudTrail = API log. Config = resource config history.</div>
+  <figure class="diagram"><svg viewBox="0 0 760 320" role="img" aria-label="Governance and security question to service mapping"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="b" x="10" y="8" width="400" height="42" rx="9"/><text x="210.0" y="33.5" text-anchor="middle">Who called which API, and when?</text><line x1="410" y1="29" x2="470" y2="29" marker-end="url(#ah)"/><rect class="bg" x="470" y="8" width="280" height="42" rx="9"/><text x="610.0" y="33.5" text-anchor="middle">AWS CloudTrail</text><rect class="b" x="10" y="60" width="400" height="42" rx="9"/><text x="210.0" y="85.5" text-anchor="middle">What changed in my resource configuration?</text><line x1="410" y1="81" x2="470" y2="81" marker-end="url(#ah)"/><rect class="bg" x="470" y="60" width="280" height="42" rx="9"/><text x="610.0" y="85.5" text-anchor="middle">AWS Config</text><rect class="b" x="10" y="112" width="400" height="42" rx="9"/><text x="210.0" y="137.5" text-anchor="middle">I need AWS SOC / ISO compliance reports</text><line x1="410" y1="133" x2="470" y2="133" marker-end="url(#ah)"/><rect class="bg" x="470" y="112" width="280" height="42" rx="9"/><text x="610.0" y="137.5" text-anchor="middle">AWS Artifact</text><rect class="b" x="10" y="164" width="400" height="42" rx="9"/><text x="210.0" y="189.5" text-anchor="middle">I need evidence for my own audit</text><line x1="410" y1="185" x2="470" y2="185" marker-end="url(#ah)"/><rect class="bg" x="470" y="164" width="280" height="42" rx="9"/><text x="610.0" y="189.5" text-anchor="middle">AWS Audit Manager</text><rect class="b" x="10" y="216" width="400" height="42" rx="9"/><text x="210.0" y="241.5" text-anchor="middle">Where is PII in my S3 buckets?</text><line x1="410" y1="237" x2="470" y2="237" marker-end="url(#ah)"/><rect class="bg" x="470" y="216" width="280" height="42" rx="9"/><text x="610.0" y="241.5" text-anchor="middle">Amazon Macie</text><rect class="b" x="10" y="268" width="400" height="42" rx="9"/><text x="210.0" y="293.5" text-anchor="middle">Which software vulnerabilities exist?</text><line x1="410" y1="289" x2="470" y2="289" marker-end="url(#ah)"/><rect class="bg" x="470" y="268" width="280" height="42" rx="9"/><text x="610.0" y="293.5" text-anchor="middle">Amazon Inspector</text></svg><figcaption><b>In simple words:</b> Match the question to the tool. These show up as "which service should you use?" in the governance and security domain.</figcaption></figure>
+<div class="quiz" data-q="t19"></div>
+</section>
+
+<section class="topic" id="t20">
+  <span class="dom">Domain 3/5 · Cost &amp; Deployment Choices</span>
+  <h2>20. Cost, Pricing &amp; Deployment</h2>
+  <div class="simple"><b>In simple words:</b> GenAI is billed mostly by tokens. Smaller model, shorter prompt, and batch processing all save money.</div>
+  <h3>Bedrock pricing options</h3>
+  <ul>
+    <li><b>On-demand:</b> pay per input/output token (or per image). No commitment. Best for variable/testing.</li>
+    <li><b>Batch:</b> submit many prompts for asynchronous processing at a discount.</li>
+    <li><b>Provisioned Throughput:</b> reserve model units (hourly; optional 1- or 6-month commitment) for steady high load; <b>required for custom models</b>.</li>
+    <li>Customization has training cost + storage; RAG has embedding + vector store cost.</li>
+  </ul>
+  <h3>Reduce cost</h3>
+  <ul><li>Right-size model (smaller if quality is enough), shorter prompts, cap max tokens, cache, batch, prompt-engineering/RAG before fine-tuning.</li></ul>
+  <h3>Hosting trade-offs</h3>
+  <ul>
+    <li>Self-hosted (SageMaker) = control, but you pay for instances even when idle. Serverless/managed (Bedrock) = pay for use.</li>
+    <li>SageMaker inference: real-time, serverless, asynchronous, batch transform.</li>
+    <li><b>AWS Trainium</b> (chips for training) and <b>AWS Inferentia</b> (chips for inference) give better price-performance than GPUs.</li>
+    <li>Other tradeoffs: responsiveness/latency, availability, redundancy, Region coverage, performance vs cost, token-based pricing, custom-model cost.</li>
+  </ul>
+  <figure class="diagram"><svg viewBox="0 0 760 225" role="img" aria-label="Bedrock pricing modes compared"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><rect class="ba" x="10" y="10" width="240" height="175" rx="9"/><text x="130.0" y="78.0" text-anchor="middle">On-demand</text><text class="s" x="130.0" y="94.0" text-anchor="middle">pay per input/output token</text><text class="s" x="130.0" y="110.0" text-anchor="middle">no commitment</text><text class="s" x="130.0" y="126.0" text-anchor="middle">Best for: testing, spiky use</text><rect class="bo" x="260" y="10" width="240" height="175" rx="9"/><text x="380.0" y="78.0" text-anchor="middle">Batch</text><text class="s" x="380.0" y="94.0" text-anchor="middle">prompts processed async from S3</text><text class="s" x="380.0" y="110.0" text-anchor="middle">cheaper than on-demand</text><text class="s" x="380.0" y="126.0" text-anchor="middle">Best for: bulk, not real-time</text><rect class="bg" x="510" y="10" width="240" height="175" rx="9"/><text x="630.0" y="70.0" text-anchor="middle">Provisioned Throughput</text><text class="s" x="630.0" y="86.0" text-anchor="middle">reserved model capacity (hourly)</text><text class="s" x="630.0" y="102.0" text-anchor="middle">1 or 6-month commitment = cheaper</text><text class="s" x="630.0" y="118.0" text-anchor="middle">REQUIRED for custom models</text><text class="s" x="630.0" y="134.0" text-anchor="middle">Best for: steady high volume</text><text class="s" x="380" y="212" text-anchor="middle">Cut cost: smaller model, shorter prompts, lower max tokens, batch when not urgent.</text></svg><figcaption><b>In simple words:</b> Pick the pricing mode by traffic pattern: unpredictable means on-demand, bulk and not urgent means batch, steady and heavy means provisioned.</figcaption></figure>
+<div class="quiz" data-q="t20"></div>
+</section>
+
+<section class="panel" id="cheat">
+  <h2>Service cheat sheet (one line each)</h2>
+  <table>
+    <tr><th>Service</th><th>Remember as</th></tr>
+    <tr><td>Bedrock</td><td>Many FMs, one API, serverless</td></tr>
+    <tr><td>Bedrock Knowledge Bases</td><td>Managed RAG</td></tr>
+    <tr><td>Bedrock Agents</td><td>Multi-step tasks + API actions</td></tr>
+    <tr><td>Bedrock Guardrails</td><td>Block harmful/PII/off-topic, grounding check</td></tr>
+    <tr><td>Amazon Q Business / Developer</td><td>Work assistant / coding assistant</td></tr>
+    <tr><td>PartyRock</td><td>No-code GenAI playground</td></tr>
+    <tr><td>SageMaker</td><td>Build/train/deploy custom ML</td></tr>
+    <tr><td>SM Canvas / JumpStart / Autopilot</td><td>No-code / model hub / AutoML</td></tr>
+    <tr><td>SM Clarify / Model Monitor / Model Cards</td><td>Bias+explain / drift / docs</td></tr>
+    <tr><td>SM Ground Truth / Data Wrangler / Feature Store</td><td>Label / prep / store features</td></tr>
+    <tr><td>A2I</td><td>Human review of predictions</td></tr>
+    <tr><td>Rekognition · Textract · Comprehend</td><td>Images · documents · text meaning</td></tr>
+    <tr><td>Transcribe · Polly · Translate · Lex</td><td>Speech→text · text→speech · languages · chatbots</td></tr>
+    <tr><td>Kendra · Personalize · Forecast · Fraud Detector</td><td>Search · recommendations · time series · fraud</td></tr>
+    <tr><td>IAM · KMS · PrivateLink · Macie</td><td>Access · encryption · private network · PII discovery</td></tr>
+    <tr><td>CloudTrail · Config · Artifact · Audit Manager</td><td>API log · config history · AWS reports · audit evidence</td></tr>
+    <tr><td>Inspector · GuardDuty · Security Hub</td><td>Vulnerabilities · threats · aggregated findings</td></tr>
+    <tr><td>Trainium · Inferentia</td><td>Training chip · inference chip</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="final">
+  <h2>Last-day checklist</h2>
+  <ul>
+    <li>☐ I can say AI ⊃ ML ⊃ DL ⊃ GenAI and give one example of each learning type.</li>
+    <li>☐ I know precision vs recall and which metric fits which scenario.</li>
+    <li>☐ I can name the correct AWS AI service from a scenario in under 5 seconds.</li>
+    <li>☐ I know the adaptation ladder: prompt → RAG → fine-tune → continued pre-train.</li>
+    <li>☐ I know Bedrock features: Knowledge Bases, Agents, Guardrails, Evaluation, Provisioned Throughput.</li>
+    <li>☐ I know ROUGE/BLEU/BERTScore, temperature/top-p/top-k.</li>
+    <li>☐ I can list responsible-AI dimensions and the tools (Clarify, A2I, Model Cards).</li>
+    <li>☐ I know the security/governance service for each need (Macie, KMS, PrivateLink, CloudTrail, Config, Artifact, Audit Manager).</li>
+    <li>☐ I scored 80%+ on every topic quiz and on the official practice set.</li>
+  </ul>
+  <p>Good luck — you've got this. 🎯</p>
+</section>
+
+</main>
+</div>
+
+
+
+<script>const QUIZ={};</script>
+<script src="q/pad.js"></script>
+<script src="q/t1.js"></script>
+<script src="q/t2.js"></script>
+<script src="q/t3.js"></script>
+<script src="q/t4.js"></script>
+<script src="q/t5.js"></script>
+<script src="q/t6.js"></script>
+<script src="q/t7.js"></script>
+<script src="q/t8.js"></script>
+<script src="q/t9.js"></script>
+<script src="q/t10.js"></script>
+<script src="q/t11.js"></script>
+<script src="q/t12.js"></script>
+<script src="q/t13.js"></script>
+<script src="q/t14.js"></script>
+<script src="q/t15.js"></script>
+<script src="q/t16.js"></script>
+<script src="q/t17.js"></script>
+<script src="q/t18.js"></script>
+<script src="q/t19.js"></script>
+<script src="q/t20.js"></script>
+<script>
+const store={
+  get(){try{return JSON.parse(localStorage.getItem('aif-c01-v2')||'{}')}catch(e){return {}}},
+  set(v){try{localStorage.setItem('aif-c01-v2',JSON.stringify(v))}catch(e){}}
+};
+let prog=store.get();
+const LET='ABCDE';
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function prep(t){
+  return (QUIZ[t]||[]).map((x,i)=>{
+    const wrong=x[2].slice();
+    const pool=(typeof PAD!=='undefined'&&PAD[t]||[]).filter(p=>!wrong.includes(p)&&!x[1].includes(p));
+    let k=i;
+    while(x[1].length+wrong.length<5&&pool.length){const idx=k%pool.length;wrong.push(pool[idx]);pool.splice(idx,1);k++;}
+    const opts=shuffle(x[1].map(o=>({o,c:1})).concat(wrong.map(o=>({o,c:0}))));
+    return {q:x[0],opts,e:x[3],n:x[1].length};
+  });
+}
+function totalQ(){return Object.values(QUIZ).reduce((n,a)=>n+a.length,0);}
+function updateScores(){
+  let ok=0;
+  Object.keys(QUIZ).forEach(t=>{
+    const done=QUIZ[t].filter((_,i)=>prog[t+'_'+i]===1).length;
+    ok+=done;
+    const s=document.querySelector('.quiz[data-q="'+t+'"] .score');
+    if(s) s.textContent='Topic score: '+done+' / '+QUIZ[t].length+' correct';
+  });
+  const T=totalQ();
+  document.getElementById('overall').textContent='Practice progress: '+ok+' / '+T+' answered correctly';
+  document.getElementById('overallbar').style.width=(T?ok/T*100:0)+'%';
+}
+function renderTopic(t,body){
+  body.innerHTML='';
+  prep(t).forEach((q,i)=>{
+    const d=document.createElement('div');d.className='q';
+    d.innerHTML='<p class="qt"><b>Q'+(i+1)+'.</b> '+q.q+' <em>(Choose '+(q.n===2?'TWO':'THREE')+')</em></p>'+
+      q.opts.map((o,j)=>'<label class="opt"><input type="checkbox" value="'+j+'"><span>'+LET[j]+'. '+o.o+'</span></label>').join('')+
+      '<button class="chk">Check answer</button> <button class="ghost rst">Retry</button><div class="exp" hidden></div>';
+    const exp=d.querySelector('.exp'),opts=[...d.querySelectorAll('.opt')];
+    d.querySelector('.chk').onclick=()=>{
+      const sel=opts.map((l,j)=>l.querySelector('input').checked?j:-1).filter(j=>j>=0);
+      if(sel.length!==q.n){exp.hidden=false;exp.textContent='Select exactly '+q.n+' options.';return;}
+      const right=sel.every(j=>q.opts[j].c);
+      opts.forEach((l,j)=>{
+        l.classList.remove('right','wrong','missed');
+        const p=sel.includes(j),a=q.opts[j].c===1;
+        if(p&&a)l.classList.add('right');else if(p&&!a)l.classList.add('wrong');else if(!p&&a)l.classList.add('missed');
+      });
+      const letters=q.opts.map((o,j)=>o.c?LET[j]:'').filter(Boolean).join(', ');
+      exp.hidden=false;
+      exp.innerHTML=(right?'✅ <b>Correct.</b> ':'❌ <b>Not quite.</b> Correct: '+letters+'. ')+q.e;
+      prog[t+'_'+i]=right?1:0;store.set(prog);updateScores();
+    };
+    d.querySelector('.rst').onclick=()=>{
+      opts.forEach(l=>{l.classList.remove('right','wrong','missed');l.querySelector('input').checked=false;});exp.hidden=true;
+    };
+    body.appendChild(d);
+  });
+}
+function build(){
+  document.querySelectorAll('.quiz').forEach(box=>{
+    const t=box.dataset.q,n=(QUIZ[t]||[]).length;
+    box.innerHTML='<h4>Practice questions</h4><p class="score"></p>'+
+      '<details class="qd"><summary>Open '+n+' practice questions (5 options each, choose 2 or 3)</summary>'+
+      '<div class="qbody"></div><button class="ghost rt">Reset this topic</button></details>';
+    const det=box.querySelector('details'),body=box.querySelector('.qbody');
+    let done=false;
+    det.addEventListener('toggle',()=>{if(det.open&&!done){renderTopic(t,body);done=true;}});
+    box.querySelector('.rt').onclick=()=>{Object.keys(prog).forEach(k=>{if(k.indexOf(t+'_')===0)delete prog[k];});store.set(prog);renderTopic(t,body);updateScores();};
+  });
+  updateScores();
+}
+document.getElementById('resetall').onclick=()=>{prog={};store.set(prog);build();};
+build();
+</script>
+
+
+</body>
+</html>
